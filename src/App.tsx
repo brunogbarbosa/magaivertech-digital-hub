@@ -9,8 +9,8 @@ import shop1 from "@/assets/shop-1.png";
 import shop2 from "@/assets/shop-2.png";
 import shop3 from "@/assets/shop-3.png";
 import shop4 from "@/assets/shop-4.png";
-import logoAsset from "@/assets/magaiver-logo.png.asset.json";
-import farolAsset from "@/assets/farol-machine.png.asset.json";
+import logoAsset from "@/assets/magaiver-logo.png";
+import farolAsset from "@/assets/farol-machine.png";
 
 const WHATSAPP = "5561981406061";
 const WA_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Olá MagaiverTech! Quero agendar um serviço.")}`;
@@ -50,7 +50,7 @@ function Navbar() {
     >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5 lg:px-10">
         <a href="#" className="group flex items-center gap-3">
-          <img src={logoAsset.url} alt="MagaiverTech" className="h-11 w-11 object-contain" />
+          <img src={logoAsset} alt="MagaiverTech" className="h-11 w-11 object-contain" />
           <div className="flex flex-col leading-none">
             <span className="font-display text-[15px] font-semibold tracking-tight text-cream">Magaiver<span className="text-amber">Tech</span></span>
             <span className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.2em] text-mute">Auto Center · DF</span>
@@ -682,7 +682,7 @@ function Farol() {
             className="col-span-12 lg:col-span-6 relative"
           >
             <div className="relative overflow-hidden rounded-2xl border hairline">
-              <img src={farolAsset.url} alt="Máquina de regulagem de farol" className="w-full h-[460px] object-cover sm:h-[560px]" />
+              <img src={farolAsset} alt="Máquina de regulagem de farol" className="w-full h-[460px] object-cover sm:h-[560px]" />
               <div className="absolute inset-0 bg-gradient-to-tr from-ink/70 via-transparent to-transparent" />
               <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-amber/50 bg-ink/80 px-3 py-1.5 backdrop-blur">
                 <Sparkles className="h-3 w-3 text-amber" />
