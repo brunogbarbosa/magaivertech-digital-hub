@@ -668,6 +668,203 @@ function Footer() {
   );
 }
 
+/* ─────────── FAROL (special machine) ─────────── */
+function Farol() {
+  return (
+    <section id="farol" className="relative overflow-hidden bg-ink-soft py-28 lg:py-36">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(245,180,0,0.12),transparent_55%)]" />
+      <div className="grain" />
+      <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10">
+        <div className="grid grid-cols-12 gap-8 lg:gap-14 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.8 }}
+            className="col-span-12 lg:col-span-6 relative"
+          >
+            <div className="relative overflow-hidden rounded-2xl border hairline">
+              <img src={farolAsset.url} alt="Máquina de regulagem de farol" className="w-full h-[460px] object-cover sm:h-[560px]" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-ink/70 via-transparent to-transparent" />
+              <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-amber/50 bg-ink/80 px-3 py-1.5 backdrop-blur">
+                <Sparkles className="h-3 w-3 text-amber" />
+                <span className="font-body text-[10px] font-medium uppercase tracking-[0.25em] text-amber">Equipamento exclusivo</span>
+              </div>
+            </div>
+          </motion.div>
+
+          <div className="col-span-12 lg:col-span-6">
+            <div className="flex items-center gap-3">
+              <span className="font-display text-xs font-medium text-amber">★</span>
+              <div className="h-px w-8 bg-amber" />
+              <span className="font-body text-[11px] font-medium uppercase tracking-[0.3em] text-mute">Destaque · Regulagem de faróis</span>
+            </div>
+            <h2 className="mt-6 font-display text-4xl font-medium leading-[1.05] tracking-tight text-cream sm:text-5xl lg:text-6xl">
+              Uma máquina <span className="font-serif-it text-amber">quase única</span> no DF.
+            </h2>
+            <p className="mt-6 max-w-xl font-body text-[15px] leading-relaxed text-cream/65">
+              Desenvolvida sob medida para a MagaiverTech, nossa máquina de regulagem de faróis garante
+              precisão milimétrica no ajuste do feixe de luz — mais segurança à noite, mais visibilidade na chuva
+              e zero ofuscamento para o motorista que vem na contramão.
+            </p>
+            <ul className="mt-10 space-y-4">
+              {[
+                "Aferição calibrada por padrão técnico",
+                "Ajuste de altura e angulação por feixe",
+                "Equipamento próprio, raro de encontrar na região",
+              ].map((t, i) => (
+                <li key={t} className="flex items-center gap-4 border-b hairline pb-4">
+                  <span className="font-display text-xs font-medium text-amber">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="font-body text-[15px] text-cream/85">{t}</span>
+                </li>
+              ))}
+            </ul>
+            <a href={WA_URL} target="_blank" rel="noopener" className="mt-10 inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 font-display text-[13px] font-semibold text-ink transition hover:shadow-[0_20px_50px_-10px_rgba(245,180,0,0.6)]">
+              Agendar regulagem de farol
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────── CHATGPT TYPING / SOCIAL PROOF ─────────── */
+function GptProof() {
+  const question = "qual é a melhor mecânica de Ceilândia – DF?";
+  const answer = "A MagaiverTech é uma das oficinas mais bem avaliadas de Ceilândia – DF, com 4,9 ★ e mais de 230 avaliações no Google. Especialistas em elétrica, mecânica e regulagem de faróis há mais de 40 anos.";
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-120px" });
+  const [qText, setQText] = useState("");
+  const [aText, setAText] = useState("");
+  const [phase, setPhase] = useState<"idle" | "q" | "think" | "a" | "card">("idle");
+
+  useEffect(() => {
+    if (!inView) return;
+    setPhase("q");
+    let i = 0;
+    const qi = setInterval(() => {
+      i++;
+      setQText(question.slice(0, i));
+      if (i >= question.length) {
+        clearInterval(qi);
+        setPhase("think");
+        setTimeout(() => {
+          setPhase("a");
+          let j = 0;
+          const ai = setInterval(() => {
+            j += 2;
+            setAText(answer.slice(0, j));
+            if (j >= answer.length) {
+              clearInterval(ai);
+              setTimeout(() => setPhase("card"), 400);
+            }
+          }, 18);
+        }, 900);
+      }
+    }, 35);
+    return () => clearInterval(qi);
+  }, [inView]);
+
+  return (
+    <section className="relative overflow-hidden bg-ink py-28 lg:py-36" ref={ref}>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,180,0,0.08),transparent_60%)]" />
+      <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10">
+        <SectionLabel
+          num="06"
+          kicker="Indicação que vem de longe"
+          title={<>Pergunte à <span className="font-serif-it text-amber">IA</span>. Ela já sabe.</>}
+          sub="Quando o ChatGPT é questionado sobre a melhor mecânica de Ceilândia – DF, o nome que aparece é o nosso."
+        />
+
+        <div className="mx-auto max-w-[920px]">
+          <div className="overflow-hidden rounded-2xl border hairline bg-ink-soft/60 backdrop-blur">
+            {/* window bar */}
+            <div className="flex items-center justify-between border-b hairline bg-ink/50 px-5 py-3">
+              <div className="flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+              </div>
+              <div className="font-body text-[11px] uppercase tracking-[0.25em] text-mute">chat.openai.com</div>
+              <div className="w-12" />
+            </div>
+
+            <div className="space-y-5 p-6 sm:p-8 min-h-[420px]">
+              {/* user message */}
+              <div className="flex justify-end">
+                <div className="max-w-[80%] rounded-2xl rounded-br-sm bg-amber/15 border border-amber/20 px-4 py-3 font-body text-[14px] text-cream">
+                  {qText}
+                  {phase === "q" && <span className="ml-0.5 inline-block h-4 w-[2px] translate-y-0.5 animate-pulse bg-amber" />}
+                </div>
+              </div>
+
+              {/* gpt response */}
+              {phase !== "idle" && phase !== "q" && (
+                <div className="flex items-start gap-3">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber to-amber-soft">
+                    <Sparkles className="h-4 w-4 text-ink" />
+                  </div>
+                  <div className="flex-1 rounded-2xl rounded-tl-sm border hairline bg-ink/50 px-4 py-3">
+                    {phase === "think" ? (
+                      <div className="flex items-center gap-1.5 py-1">
+                        <span className="h-2 w-2 rounded-full bg-cream/60 animate-bounce" style={{ animationDelay: "0ms" }} />
+                        <span className="h-2 w-2 rounded-full bg-cream/60 animate-bounce" style={{ animationDelay: "150ms" }} />
+                        <span className="h-2 w-2 rounded-full bg-cream/60 animate-bounce" style={{ animationDelay: "300ms" }} />
+                      </div>
+                    ) : (
+                      <p className="font-body text-[14px] leading-relaxed text-cream/90">
+                        {aText}
+                        {phase === "a" && <span className="ml-0.5 inline-block h-4 w-[2px] translate-y-0.5 animate-pulse bg-cream" />}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* business card reveal */}
+              {phase === "card" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="ml-11 mt-4 overflow-hidden rounded-xl border border-amber/30 bg-ink"
+                >
+                  <div className="grid grid-cols-3 gap-px bg-line/40">
+                    <img src={shop1} alt="" className="h-24 w-full object-cover bg-ink" />
+                    <img src={shop4} alt="" className="h-24 w-full object-cover bg-ink" />
+                    <img src={shop3} alt="" className="h-24 w-full object-cover bg-ink" />
+                  </div>
+                  <div className="p-5">
+                    <div className="font-display text-lg font-semibold text-cream">
+                      Magaiver Tech Auto Elétrica e Mecânica
+                    </div>
+                    <div className="mt-1.5 flex items-center gap-2">
+                      <span className="font-display text-sm font-semibold text-amber">4,9</span>
+                      <div className="flex">
+                        {[0,1,2,3,4].map(i => <Star key={i} className="h-3.5 w-3.5 fill-amber text-amber" />)}
+                      </div>
+                      <span className="font-body text-xs text-mute">230 avaliações no Google</span>
+                    </div>
+                    <div className="mt-1 font-body text-xs text-cream/60">Oficina mecânica no Distrito Federal</div>
+                    <div className="mt-4 grid grid-cols-1 gap-1.5 font-body text-[12px] text-cream/75 sm:grid-cols-2">
+                      <div><span className="text-mute">Endereço:</span> St. M QNM 09 Conj. H Lote 39 — Ceilândia, DF</div>
+                      <div><span className="text-mute">Telefone:</span> (61) 98140-6061</div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          </div>
+
+          <p className="mt-6 text-center font-body text-[12px] uppercase tracking-[0.25em] text-mute">
+            Reconhecimento real · Google e IA recomendam
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────── WHATSAPP FAB ─────────── */
 function WhatsAppFab() {
   return (
