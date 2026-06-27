@@ -893,8 +893,10 @@ function Home() {
         <Hero />
         <Marquee />
         <Services />
+        <Farol />
         <Diferenciais />
         <Numbers />
+        <GptProof />
         <Processo />
         <Oficina />
         <Sobre />
