@@ -192,10 +192,12 @@ function Hero() {
 function Marquee() {
   const items = [
     "Elétrica Automotiva",
+    "Mecânica Geral",
     "Alinhamento Computadorizado",
     "Balanceamento Eletrônico",
     "Regulagem de Faróis",
     "Sistema de Freios",
+    "Suspensão",
     "Diagnóstico Scanner",
   ];
   const tripled = [...items, ...items, ...items];
@@ -234,12 +236,12 @@ function SectionLabel({ num, kicker, title, sub }: { num: string; kicker: string
 
 /* ─────────── SERVICES ─────────── */
 const services = [
-  { Icon: Zap, t: "Elétrica Automotiva", d: "Diagnóstico computadorizado e reparo de todo sistema elétrico do veículo." },
-  { Icon: Target, t: "Alinhamento", d: "Alinhamento computadorizado de precisão para segurança e vida útil dos pneus." },
-  { Icon: Scale, t: "Balanceamento", d: "Balanceamento eletrônico eliminando vibrações e ruídos na direção." },
-  { Icon: Lightbulb, t: "Regulagem de Faróis", d: "Ajuste técnico para máxima visibilidade e segurança noturna." },
-  { Icon: Disc, t: "Sistema de Freios", d: "Revisão completa: pastilhas, discos, fluido e cabos." },
-  { Icon: ScanLine, t: "Diagnóstico Geral", d: "Scanner automotivo profissional identificando qualquer falha." },
+  { Icon: Zap, t: "Elétrica Automotiva", d: "Diagnóstico computadorizado e reparo de todo o sistema elétrico." },
+  { Icon: Wrench, t: "Mecânica Geral", d: "Motor, embreagem, câmbio, suspensão e revisões completas." },
+  { Icon: Target, t: "Alinhamento", d: "Alinhamento computadorizado de precisão para sua segurança." },
+  { Icon: Scale, t: "Balanceamento", d: "Balanceamento eletrônico eliminando vibrações na direção." },
+  { Icon: Lightbulb, t: "Regulagem de Faróis", d: "Equipamento exclusivo para ajuste técnico de farol." },
+  { Icon: Disc, t: "Sistema de Freios", d: "Pastilhas, discos, fluido, cabos e revisão completa." },
 ];
 
 function Services() {
