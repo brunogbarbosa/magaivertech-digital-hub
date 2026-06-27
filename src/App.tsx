@@ -3,14 +3,16 @@ import { Routes, Route } from "react-router-dom";
 import { motion, useScroll, useSpring, useInView, animate, useTransform } from "framer-motion";
 import {
   Zap, Target, Scale, Lightbulb, Disc, ScanLine, Instagram, MapPin, Clock,
-  ArrowUpRight, ArrowRight, Plus,
+  ArrowUpRight, ArrowRight, Plus, Wrench, Cog, Sparkles, Star,
 } from "lucide-react";
 import shop1 from "@/assets/shop-1.png";
 import shop2 from "@/assets/shop-2.png";
 import shop3 from "@/assets/shop-3.png";
 import shop4 from "@/assets/shop-4.png";
+import logoAsset from "@/assets/magaiver-logo.png.asset.json";
+import farolAsset from "@/assets/farol-machine.png.asset.json";
 
-const WHATSAPP = "5561999999999";
+const WHATSAPP = "5561981406061";
 const WA_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Olá MagaiverTech! Quero agendar um serviço.")}`;
 
 /* ─────────── SCROLL PROGRESS ─────────── */
@@ -47,8 +49,8 @@ function Navbar() {
       }`}
     >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5 lg:px-10">
-        <a href="#" className="group flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center bg-amber font-display text-base font-bold text-ink">M</div>
+        <a href="#" className="group flex items-center gap-3">
+          <img src={logoAsset.url} alt="MagaiverTech" className="h-11 w-11 object-contain" />
           <div className="flex flex-col leading-none">
             <span className="font-display text-[15px] font-semibold tracking-tight text-cream">Magaiver<span className="text-amber">Tech</span></span>
             <span className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.2em] text-mute">Auto Center · DF</span>
@@ -106,20 +108,19 @@ function Hero() {
             initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="font-display text-[44px] font-medium leading-[0.95] tracking-[-0.03em] text-cream sm:text-[68px] lg:text-[104px]"
           >
-            Elétrica
+            Tecnologia
             <br />
-            <span className="font-serif-it text-amber">automotiva</span>
-            <span className="text-cream">,</span>
+            <span className="font-serif-it text-amber">que move</span>
             <br />
-            <span className="text-mute">resolvida.</span>
+            <span className="text-mute">seu carro.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
             className="mt-10 max-w-xl font-body text-[15px] leading-relaxed text-cream/65 sm:text-base"
           >
-            Mais de quatro décadas decifrando o que outros desistem. Diagnóstico digital, alinhamento, balanceamento e o
-            cuidado de uma oficina de bairro feita por especialistas.
+            Auto Center completo em Ceilândia – DF. Elétrica, mecânica, alinhamento, balanceamento, freios,
+            suspensão e regulagem de faróis. Mais de quatro décadas decifrando o que outros desistem.
           </motion.p>
 
           <motion.div
@@ -175,7 +176,7 @@ function Hero() {
         {/* Bottom row */}
         <div className="col-span-12 mt-16 flex flex-wrap items-end justify-between gap-6 border-t hairline pt-8">
           <div className="font-body text-[12px] tracking-[0.18em] text-mute uppercase">
-            <span className="text-cream">01</span> / 09 — Eletrônica automotiva
+            <span className="text-cream">01</span> / 09 — Auto Center completo
           </div>
           <a href="#servicos" className="group inline-flex items-center gap-2 font-body text-xs uppercase tracking-[0.25em] text-cream/60 hover:text-amber">
             Role para explorar
