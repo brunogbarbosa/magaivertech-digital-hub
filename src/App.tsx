@@ -1,199 +1,64 @@
 import { useEffect, useRef, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { motion, useScroll, useSpring, useInView, useMotionValue, useTransform, animate, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useSpring, useInView, animate, useTransform } from "framer-motion";
 import {
-  Zap, Target, Scale, Lightbulb, Disc, ScanLine, Instagram, MapPin, Clock, Phone, ArrowRight, ChevronDown, MessageCircle,
+  Zap, Target, Scale, Lightbulb, Disc, ScanLine, Instagram, MapPin, Clock,
+  ArrowUpRight, ArrowRight, Plus,
 } from "lucide-react";
 import shop1 from "@/assets/shop-1.png";
 import shop2 from "@/assets/shop-2.png";
 import shop3 from "@/assets/shop-3.png";
 import shop4 from "@/assets/shop-4.png";
 
-const WHATSAPP = "5561999999999"; // placeholder
+const WHATSAPP = "5561999999999";
 const WA_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Olá MagaiverTech! Quero agendar um serviço.")}`;
 
-/* ------------------- HUD CIRCUIT BACKGROUND ------------------- */
-function HudCircuit({ opacity = 0.35 }: { opacity?: number }) {
-  return (
-    <svg
-      className="absolute inset-0 h-full w-full pointer-events-none"
-      viewBox="0 0 1200 800"
-      preserveAspectRatio="xMidYMid slice"
-      aria-hidden
-      style={{ opacity }}
-    >
-      <defs>
-        <radialGradient id="hudGrad" cx="50%" cy="50%" r="60%">
-          <stop offset="0%" stopColor="#f5c200" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="#f5c200" stopOpacity="0" />
-        </radialGradient>
-        <linearGradient id="lineGrad" x1="0" x2="1">
-          <stop offset="0%" stopColor="#f5c200" stopOpacity="0" />
-          <stop offset="50%" stopColor="#f5c200" stopOpacity="1" />
-          <stop offset="100%" stopColor="#f5c200" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-
-      {/* Grid */}
-      <g stroke="#f5c200" strokeOpacity="0.08" strokeWidth="1">
-        {Array.from({ length: 24 }).map((_, i) => (
-          <line key={`v${i}`} x1={i * 50} y1="0" x2={i * 50} y2="800" />
-        ))}
-        {Array.from({ length: 16 }).map((_, i) => (
-          <line key={`h${i}`} x1="0" y1={i * 50} x2="1200" y2={i * 50} />
-        ))}
-      </g>
-
-      <circle cx="600" cy="400" r="320" fill="url(#hudGrad)" className="animate-hud-pulse" />
-
-      {/* Circuit traces */}
-      <g fill="none" stroke="#f5c200" strokeWidth="1.5">
-        <path className="circuit-path" d="M 0 200 L 240 200 L 280 240 L 480 240 L 520 200 L 800 200 L 840 240 L 1200 240" />
-        <path className="circuit-path" style={{ animationDelay: "-2s" }} d="M 0 560 L 200 560 L 240 520 L 520 520 L 560 560 L 760 560 L 800 520 L 1200 520" />
-        <path className="circuit-path" style={{ animationDelay: "-4s" }} d="M 100 0 L 100 160 L 140 200 L 140 360 L 100 400 L 100 800" />
-        <path className="circuit-path" style={{ animationDelay: "-6s" }} d="M 1100 0 L 1100 200 L 1060 240 L 1060 480 L 1100 520 L 1100 800" />
-        <path className="circuit-path" style={{ animationDelay: "-1s" }} d="M 300 800 L 300 640 L 360 580 L 600 580 L 660 640 L 660 800" />
-      </g>
-
-      {/* Nodes */}
-      <g fill="#f5c200">
-        {[
-          [240, 200], [520, 200], [840, 240], [240, 520], [560, 560], [100, 200], [1060, 240], [360, 580], [660, 640],
-        ].map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r="4">
-            <animate attributeName="opacity" values="0.3;1;0.3" dur={`${2 + (i % 3)}s`} repeatCount="indefinite" />
-          </circle>
-        ))}
-      </g>
-    </svg>
-  );
-}
-
-/* ------------------- LOADING SCREEN ------------------- */
-function LoadingScreen({ onDone }: { onDone: () => void }) {
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    const start = Date.now();
-    const dur = 2000;
-    let raf = 0;
-    const tick = () => {
-      const p = Math.min(1, (Date.now() - start) / dur);
-      setProgress(p);
-      if (p < 1) raf = requestAnimationFrame(tick);
-      else setTimeout(onDone, 250);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [onDone]);
-
-  return (
-    <motion.div
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.6 }}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0a0f1e]"
-    >
-      <HudCircuit opacity={0.25} />
-      <motion.div
-        initial={{ scale: 0.6, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative z-10 mb-10"
-      >
-        <div className="font-display text-7xl font-black tracking-tighter">
-          <span className="text-gold">M</span>
-          <span className="text-white">T</span>
-        </div>
-        <div className="mt-1 text-center font-tech text-xs tracking-[0.4em] text-mute">MAGAIVER TECH</div>
-      </motion.div>
-
-      <div className="relative z-10 h-1 w-72 overflow-hidden rounded-full bg-white/10">
-        <div
-          className="h-full bg-gold transition-[width] duration-75"
-          style={{ width: `${progress * 100}%`, boxShadow: "0 0 12px #f5c200" }}
-        />
-      </div>
-      <div className="relative z-10 mt-4 font-display text-xs tracking-[0.3em] text-gold animate-blink">
-        INICIANDO DIAGNÓSTICO...
-      </div>
-    </motion.div>
-  );
-}
-
-/* ------------------- SCROLL PROGRESS ------------------- */
+/* ─────────── SCROLL PROGRESS ─────────── */
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
   return (
     <motion.div
       style={{ scaleX, transformOrigin: "0% 50%" }}
-      className="fixed top-0 left-0 right-0 z-[60] h-[3px] bg-gold"
+      className="fixed top-0 left-0 right-0 z-[60] h-[2px] bg-amber"
     />
   );
 }
 
-/* ------------------- CUSTOM CURSOR ------------------- */
-function CustomCursor() {
-  const x = useMotionValue(-100);
-  const y = useMotionValue(-100);
-  const sx = useSpring(x, { stiffness: 300, damping: 30, mass: 0.5 });
-  const sy = useSpring(y, { stiffness: 300, damping: 30, mass: 0.5 });
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    if (window.matchMedia("(hover: none)").matches) return;
-    document.documentElement.classList.add("has-custom-cursor");
-    setShow(true);
-    const handler = (e: MouseEvent) => {
-      x.set(e.clientX);
-      y.set(e.clientY);
-    };
-    window.addEventListener("mousemove", handler);
-    return () => {
-      window.removeEventListener("mousemove", handler);
-      document.documentElement.classList.remove("has-custom-cursor");
-    };
-  }, [x, y]);
-  if (!show) return null;
-  return (
-    <motion.div
-      style={{ translateX: sx, translateY: sy }}
-      className="pointer-events-none fixed top-0 left-0 z-[70] -ml-2 -mt-2 h-4 w-4 rounded-full bg-gold mix-blend-difference"
-    />
-  );
-}
-
-/* ------------------- NAVBAR ------------------- */
+/* ─────────── NAVBAR ─────────── */
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 30);
+    const h = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", h);
     return () => window.removeEventListener("scroll", h);
   }, []);
   const links = [
-    { l: "Início", h: "#hero" },
     { l: "Serviços", h: "#servicos" },
     { l: "Diferenciais", h: "#diferenciais" },
+    { l: "Oficina", h: "#oficina" },
     { l: "Sobre", h: "#sobre" },
     { l: "Contato", h: "#contato" },
   ];
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-navy/90 backdrop-blur-lg border-b border-gold/20" : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled ? "bg-ink/80 backdrop-blur-xl border-b hairline" : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <a href="#hero" className="font-display text-xl font-black tracking-wider">
-          <span className="text-gold">M</span>
-          <span className="text-white">AGAIVER </span>
-          <span className="text-gold">T</span>
-          <span className="text-white">ECH</span>
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5 lg:px-10">
+        <a href="#" className="group flex items-center gap-2.5">
+          <div className="flex h-9 w-9 items-center justify-center bg-amber font-display text-base font-bold text-ink">M</div>
+          <div className="flex flex-col leading-none">
+            <span className="font-display text-[15px] font-semibold tracking-tight text-cream">Magaiver<span className="text-amber">Tech</span></span>
+            <span className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.2em] text-mute">Auto Center · DF</span>
+          </div>
         </a>
-        <nav className="hidden items-center gap-8 lg:flex">
+        <nav className="hidden items-center gap-9 lg:flex">
           {links.map((l) => (
-            <a key={l.h} href={l.h} className="font-tech text-sm uppercase tracking-widest text-white/80 transition hover:text-gold">
+            <a key={l.h} href={l.h} className="group relative font-body text-[13px] font-medium text-cream/70 transition hover:text-cream">
               {l.l}
+              <span className="absolute -bottom-1 left-0 h-px w-0 bg-amber transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </nav>
@@ -201,112 +66,145 @@ function Navbar() {
           href={WA_URL}
           target="_blank"
           rel="noopener"
-          className="group relative bg-gold px-5 py-2.5 font-display text-xs font-bold uppercase tracking-widest text-navy transition hover:shadow-[0_0_30px_rgba(245,194,0,0.6)]"
+          className="group inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/10 px-5 py-2.5 font-display text-[12px] font-semibold tracking-tight text-amber backdrop-blur transition hover:bg-amber hover:text-ink"
         >
-          Agendar Serviço
+          Agendar
+          <ArrowUpRight className="h-3.5 w-3.5 transition group-hover:rotate-45" />
         </a>
       </div>
     </header>
   );
 }
 
-/* ------------------- HERO ------------------- */
+/* ─────────── HERO ─────────── */
 function Hero() {
   return (
-    <section id="hero" className="relative flex min-h-screen items-center overflow-hidden bg-navy">
-      <HudCircuit opacity={0.45} />
-      <div className="absolute inset-0 bg-gradient-to-b from-navy/40 via-navy/20 to-navy" />
-
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-32 pb-16">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
-          className="mb-6 inline-flex items-center gap-2 border border-gold/40 bg-navy/60 px-4 py-1.5 backdrop-blur animate-gold-pulse"
-        >
-          <Zap className="h-3.5 w-3.5 text-gold" />
-          <span className="font-tech text-xs font-semibold tracking-[0.3em] text-gold">DIAGNÓSTICO DIGITAL</span>
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="font-display text-5xl font-black uppercase leading-[0.95] tracking-tight text-white sm:text-7xl lg:text-8xl"
-        >
-          Elétrica
-          <br />
-          <span className="text-gold">Automotiva</span>
-        </motion.h1>
-
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="my-8 h-px w-32 origin-left bg-gold"
-        />
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="max-w-2xl font-body text-base leading-relaxed text-white/70 sm:text-lg"
-        >
-          <span className="text-gold font-semibold">+40 anos</span> resolvendo o que outros não conseguem. Especialistas em diagnóstico
-          elétrico, alinhamento e balanceamento em <span className="text-white">Ceilândia – DF</span>.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-10 flex flex-wrap items-center gap-4"
-        >
-          <a
-            href={WA_URL}
-            target="_blank"
-            rel="noopener"
-            className="group inline-flex items-center gap-3 bg-gold px-7 py-4 font-display text-sm font-bold uppercase tracking-widest text-navy transition hover:shadow-[0_0_40px_rgba(245,194,0,0.6)]"
-          >
-            <MessageCircle className="h-5 w-5" />
-            Chamar no WhatsApp
-            <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-          </a>
-          <a
-            href="#servicos"
-            className="inline-flex items-center gap-3 border border-white/40 px-7 py-4 font-display text-sm font-bold uppercase tracking-widest text-white transition hover:border-gold hover:text-gold"
-          >
-            Ver Serviços
-          </a>
-        </motion.div>
+    <section id="hero" className="relative min-h-screen overflow-hidden bg-ink">
+      {/* Background gradient + grain */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(245,180,0,0.18),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(31,42,68,0.6),transparent_55%)]" />
+        <div className="grain" />
       </div>
 
-      <a
-        href="#credibilidade"
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-gold animate-bounce-down"
-        aria-label="Rolar"
-      >
-        <ChevronDown className="h-8 w-8" />
-      </a>
+      {/* Vertical rule */}
+      <div className="absolute left-6 top-0 hidden h-full border-l hairline lg:block lg:left-10" />
+      <div className="absolute right-6 top-0 hidden h-full border-r hairline lg:block lg:right-10" />
+
+      <div className="relative mx-auto grid min-h-screen max-w-[1400px] grid-cols-12 gap-6 px-6 pt-32 pb-16 lg:px-10 lg:pt-40">
+        {/* Left column: kicker + title */}
+        <div className="col-span-12 lg:col-span-8">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+            className="mb-10 flex items-center gap-3"
+          >
+            <div className="h-px w-8 bg-amber" />
+            <span className="font-body text-[11px] font-medium uppercase tracking-[0.32em] text-amber">Ceilândia · DF · Desde 1984</span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="font-display text-[44px] font-medium leading-[0.95] tracking-[-0.03em] text-cream sm:text-[68px] lg:text-[104px]"
+          >
+            Elétrica
+            <br />
+            <span className="font-serif-it text-amber">automotiva</span>
+            <span className="text-cream">,</span>
+            <br />
+            <span className="text-mute">resolvida.</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
+            className="mt-10 max-w-xl font-body text-[15px] leading-relaxed text-cream/65 sm:text-base"
+          >
+            Mais de quatro décadas decifrando o que outros desistem. Diagnóstico digital, alinhamento, balanceamento e o
+            cuidado de uma oficina de bairro feita por especialistas.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-12 flex flex-wrap items-center gap-4"
+          >
+            <a
+              href={WA_URL} target="_blank" rel="noopener"
+              className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-amber px-7 py-4 font-display text-[13px] font-semibold text-ink transition hover:shadow-[0_20px_60px_-10px_rgba(245,180,0,0.5)]"
+            >
+              <span className="relative z-10">Falar no WhatsApp</span>
+              <ArrowUpRight className="relative z-10 h-4 w-4 transition group-hover:rotate-45" />
+            </a>
+            <a
+              href="#servicos"
+              className="group inline-flex items-center gap-3 rounded-full border hairline px-7 py-4 font-display text-[13px] font-medium text-cream/85 transition hover:border-cream/40 hover:text-cream"
+            >
+              Ver serviços
+              <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+            </a>
+          </motion.div>
+        </div>
+
+        {/* Right column: stats card */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9, delay: 0.4 }}
+          className="col-span-12 lg:col-span-4 lg:pt-6"
+        >
+          <div className="relative h-full">
+            <div className="relative overflow-hidden rounded-2xl border hairline bg-ink-soft/60 backdrop-blur">
+              <img src={shop4} alt="Veículo no elevador" className="h-72 w-full object-cover opacity-75 sm:h-96" />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" />
+              <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-amber/40 bg-ink/70 px-3 py-1 backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-amber animate-glow-soft" />
+                <span className="font-body text-[10px] font-medium uppercase tracking-[0.25em] text-amber">Em operação</span>
+              </div>
+              <div className="absolute inset-x-5 bottom-5">
+                <div className="flex items-end justify-between">
+                  <div>
+                    <div className="font-display text-[64px] font-medium leading-none tracking-tight text-cream">40<span className="text-amber">+</span></div>
+                    <div className="mt-1 font-body text-[11px] uppercase tracking-[0.25em] text-mute">anos resolvendo</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-display text-2xl font-medium text-cream">5k+</div>
+                    <div className="font-body text-[10px] uppercase tracking-[0.2em] text-mute">carros</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Bottom row */}
+        <div className="col-span-12 mt-16 flex flex-wrap items-end justify-between gap-6 border-t hairline pt-8">
+          <div className="font-body text-[12px] tracking-[0.18em] text-mute uppercase">
+            <span className="text-cream">01</span> / 09 — Eletrônica automotiva
+          </div>
+          <a href="#servicos" className="group inline-flex items-center gap-2 font-body text-xs uppercase tracking-[0.25em] text-cream/60 hover:text-amber">
+            Role para explorar
+            <span className="inline-block h-px w-10 bg-current transition-all group-hover:w-16" />
+          </a>
+        </div>
+      </div>
     </section>
   );
 }
 
-/* ------------------- MARQUEE ------------------- */
-function Credibility() {
+/* ─────────── MARQUEE ─────────── */
+function Marquee() {
   const items = [
-    "⚡ +40 ANOS DE EXPERIÊNCIA",
-    "🔧 DIAGNÓSTICO DIGITAL",
-    "📍 CEILÂNDIA – DF",
-    "✅ QUALIDADE GARANTIDA",
+    "Elétrica Automotiva",
+    "Alinhamento Computadorizado",
+    "Balanceamento Eletrônico",
+    "Regulagem de Faróis",
+    "Sistema de Freios",
+    "Diagnóstico Scanner",
   ];
-  const doubled = [...items, ...items, ...items, ...items];
+  const tripled = [...items, ...items, ...items];
   return (
-    <section id="credibilidade" className="overflow-hidden bg-gold py-5">
+    <section className="border-y hairline bg-ink py-7 overflow-hidden">
       <div className="flex w-max animate-marquee items-center gap-12 whitespace-nowrap">
-        {doubled.map((t, i) => (
-          <span key={i} className="font-display text-sm font-black uppercase tracking-widest text-navy">
-            {t} <span className="ml-12 text-navy/40">/</span>
+        {tripled.map((t, i) => (
+          <span key={i} className="flex items-center gap-12">
+            <span className="font-serif-it text-2xl text-cream/70 sm:text-3xl">{t}</span>
+            <Plus className="h-4 w-4 text-amber" />
           </span>
         ))}
       </div>
@@ -314,78 +212,69 @@ function Credibility() {
   );
 }
 
-/* ------------------- SECTION TITLE ------------------- */
-function SectionTitle({ children, kicker }: { children: React.ReactNode; kicker?: string }) {
+/* ─────────── SECTION LABEL ─────────── */
+function SectionLabel({ num, kicker, title, sub }: { num: string; kicker: string; title: React.ReactNode; sub?: string }) {
   return (
-    <div className="mb-16">
-      {kicker && (
-        <div className="mb-3 font-tech text-xs font-semibold tracking-[0.4em] text-gold">{kicker}</div>
-      )}
-      <h2 className="inline-block font-display text-3xl font-black uppercase tracking-tight text-white sm:text-5xl">
-        {children}
-        <div className="mt-3 h-1 w-24 bg-gold" />
-      </h2>
+    <div className="mb-14 grid grid-cols-12 gap-6 lg:mb-20">
+      <div className="col-span-12 lg:col-span-4">
+        <div className="flex items-center gap-3">
+          <span className="font-display text-xs font-medium text-amber">{num}</span>
+          <div className="h-px w-8 bg-amber" />
+          <span className="font-body text-[11px] font-medium uppercase tracking-[0.3em] text-mute">{kicker}</span>
+        </div>
+      </div>
+      <div className="col-span-12 lg:col-span-8">
+        <h2 className="font-display text-4xl font-medium leading-[1.05] tracking-tight text-cream sm:text-5xl lg:text-6xl">{title}</h2>
+        {sub && <p className="mt-5 max-w-2xl font-body text-base leading-relaxed text-cream/55">{sub}</p>}
+      </div>
     </div>
   );
 }
 
-/* ------------------- SERVICES ------------------- */
+/* ─────────── SERVICES ─────────── */
 const services = [
-  { Icon: Zap, title: "Elétrica Automotiva", desc: "Diagnóstico computadorizado e reparo de todo sistema elétrico do seu veículo." },
-  { Icon: Target, title: "Alinhamento", desc: "Alinhamento computadorizado de precisão para maior segurança e durabilidade dos pneus." },
-  { Icon: Scale, title: "Balanceamento", desc: "Balanceamento eletrônico eliminando vibrações e garantindo conforto na direção." },
-  { Icon: Lightbulb, title: "Regulagem de Faróis", desc: "Ajuste técnico de faróis para máxima visibilidade e segurança noturna." },
-  { Icon: Disc, title: "Sistema de Freios", desc: "Revisão completa de freios: pastilhas, discos, fluido e cabos." },
-  { Icon: ScanLine, title: "Diagnóstico Geral", desc: "Scanner automotivo profissional para identificar qualquer problema no veículo." },
+  { Icon: Zap, t: "Elétrica Automotiva", d: "Diagnóstico computadorizado e reparo de todo sistema elétrico do veículo." },
+  { Icon: Target, t: "Alinhamento", d: "Alinhamento computadorizado de precisão para segurança e vida útil dos pneus." },
+  { Icon: Scale, t: "Balanceamento", d: "Balanceamento eletrônico eliminando vibrações e ruídos na direção." },
+  { Icon: Lightbulb, t: "Regulagem de Faróis", d: "Ajuste técnico para máxima visibilidade e segurança noturna." },
+  { Icon: Disc, t: "Sistema de Freios", d: "Revisão completa: pastilhas, discos, fluido e cabos." },
+  { Icon: ScanLine, t: "Diagnóstico Geral", d: "Scanner automotivo profissional identificando qualquer falha." },
 ];
-
-function ServiceCard({ s, i }: { s: typeof services[number]; i: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const onMove = (e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `perspective(900px) rotateY(${px * 8}deg) rotateX(${-py * 8}deg) translateY(-4px)`;
-  };
-  const onLeave = () => {
-    if (ref.current) ref.current.style.transform = "";
-  };
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay: i * 0.08 }}
-    >
-      <div
-        ref={ref}
-        onMouseMove={onMove}
-        onMouseLeave={onLeave}
-        className="group relative h-full border border-gold/20 bg-navy-soft p-8 transition-all duration-300 hover:border-gold hover:shadow-[0_0_50px_-10px_rgba(245,194,0,0.6)]"
-        style={{ willChange: "transform" }}
-      >
-        <div className="absolute top-0 right-0 font-display text-xs text-gold/30">0{i + 1}</div>
-        <div className="mb-6 inline-flex h-14 w-14 items-center justify-center border border-gold/40 bg-navy text-gold transition group-hover:scale-110 group-hover:bg-gold group-hover:text-navy">
-          <s.Icon className="h-7 w-7" />
-        </div>
-        <h3 className="mb-3 font-display text-xl font-bold uppercase tracking-wide text-white">{s.title}</h3>
-        <p className="font-body text-sm leading-relaxed text-mute">{s.desc}</p>
-        <div className="mt-6 h-px w-full bg-gradient-to-r from-gold/40 via-gold/10 to-transparent" />
-      </div>
-    </motion.div>
-  );
-}
 
 function Services() {
   return (
-    <section id="servicos" className="relative py-28">
-      <div className="mx-auto max-w-7xl px-6">
-        <SectionTitle kicker="O QUE FAZEMOS">Nossos Serviços</SectionTitle>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <section id="servicos" className="relative bg-ink py-28 lg:py-36">
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+        <SectionLabel
+          num="02"
+          kicker="O que fazemos"
+          title={<>Seis especialidades, <span className="font-serif-it text-amber">uma obsessão</span> — resolver.</>}
+          sub="Do diagnóstico ao reparo final, cada serviço passa pelas mãos de quem viu de tudo na elétrica automotiva."
+        />
+        <div className="grid grid-cols-1 gap-px border hairline bg-line/30 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
-            <ServiceCard key={s.title} s={s} i={i} />
+            <motion.article
+              key={s.t}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6, delay: (i % 3) * 0.08 }}
+              className="group relative overflow-hidden bg-ink p-8 transition-colors duration-500 hover:bg-ink-soft sm:p-10"
+            >
+              <div className="flex items-start justify-between">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-amber/30 bg-amber/5 text-amber transition group-hover:bg-amber group-hover:text-ink">
+                  <s.Icon className="h-5 w-5" strokeWidth={1.6} />
+                </div>
+                <span className="font-display text-xs font-medium text-mute">0{i + 1}</span>
+              </div>
+              <h3 className="mt-10 font-display text-2xl font-medium tracking-tight text-cream">{s.t}</h3>
+              <p className="mt-3 font-body text-[14px] leading-relaxed text-cream/55">{s.d}</p>
+              <div className="mt-8 flex items-center gap-2 font-body text-[11px] uppercase tracking-[0.25em] text-amber/0 transition group-hover:text-amber">
+                Saber mais <ArrowUpRight className="h-3.5 w-3.5" />
+              </div>
+              {/* corner accent */}
+              <div className="absolute right-0 bottom-0 h-12 w-12 origin-bottom-right scale-0 bg-amber transition-transform duration-500 group-hover:scale-100" style={{ clipPath: "polygon(100% 0, 100% 100%, 0 100%)" }} />
+            </motion.article>
           ))}
         </div>
       </div>
@@ -393,7 +282,7 @@ function Services() {
   );
 }
 
-/* ------------------- DIFERENCIAIS ------------------- */
+/* ─────────── DIFERENCIAIS (asymmetric) ─────────── */
 function Diferenciais() {
   const items = [
     "Mais de 40 anos de experiência real",
@@ -404,38 +293,49 @@ function Diferenciais() {
     "Localização central em Ceilândia – DF",
   ];
   return (
-    <section id="diferenciais" className="relative overflow-hidden bg-navy-soft py-28">
-      <div className="absolute inset-0 opacity-30"><HudCircuit opacity={0.25} /></div>
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1.4fr_1fr] lg:items-center">
-        <div>
-          <SectionTitle kicker="DIFERENCIAIS">Por que a MagaiverTech?</SectionTitle>
-          <p className="mb-10 max-w-2xl font-body text-lg leading-relaxed text-white/75">
-            Enquanto outros tentam, nós resolvemos. Desde que a elétrica automotiva era analógica até os sistemas digitais mais
-            modernos de hoje — a MagaiverTech esteve aqui, em Ceilândia, resolvendo o que parecia impossível.
-          </p>
-          <ul className="grid gap-4 sm:grid-cols-2">
-            {items.map((t, i) => (
-              <motion.li
-                key={t}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="flex items-start gap-3"
-              >
-                <Zap className="mt-1 h-5 w-5 shrink-0 text-gold" />
-                <span className="font-body text-white/90">{t}</span>
-              </motion.li>
-            ))}
-          </ul>
-        </div>
-        <div className="relative flex items-center justify-center">
-          <div className="relative">
-            <div className="font-display text-[18rem] font-black leading-none text-stroke-gold opacity-60 sm:text-[22rem]">
-              40
-            </div>
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 font-display text-3xl font-bold uppercase tracking-widest text-gold sm:text-4xl">
-              + Anos
+    <section id="diferenciais" className="relative overflow-hidden bg-ink-soft py-28 lg:py-36">
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+        <SectionLabel
+          num="03"
+          kicker="Diferenciais"
+          title={<>Por que a <span className="font-serif-it text-amber">MagaiverTech?</span></>}
+        />
+        <div className="grid grid-cols-12 gap-6 lg:gap-10">
+          <div className="col-span-12 lg:col-span-7">
+            <p className="max-w-2xl font-display text-2xl font-light leading-[1.35] tracking-tight text-cream sm:text-3xl">
+              Enquanto outros tentam, nós <span className="font-serif-it text-amber">resolvemos</span>. Desde quando a elétrica
+              automotiva era analógica até os sistemas digitais de hoje — estivemos aqui, em Ceilândia, fazendo o impossível parecer rotina.
+            </p>
+            <ul className="mt-12 divide-y hairline border-y hairline">
+              {items.map((t, i) => (
+                <motion.li
+                  key={t}
+                  initial={{ opacity: 0, x: -12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.05 }}
+                  className="group flex items-center justify-between py-5"
+                >
+                  <div className="flex items-center gap-5">
+                    <span className="font-display text-xs font-medium text-amber">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="font-body text-base text-cream/85 transition group-hover:text-cream">{t}</span>
+                  </div>
+                  <Plus className="h-4 w-4 text-mute transition group-hover:rotate-90 group-hover:text-amber" />
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="col-span-12 lg:col-span-5">
+            <div className="relative h-full overflow-hidden rounded-2xl border hairline">
+              <img src={shop3} alt="Interior da oficina" className="h-full w-full object-cover" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-ink via-ink/30 to-transparent" />
+              <div className="absolute inset-x-6 bottom-6">
+                <div className="font-serif-it text-3xl text-cream sm:text-4xl">
+                  "Onde os carros voltam <span className="text-amber">a funcionar.</span>"
+                </div>
+                <div className="mt-3 font-body text-[11px] uppercase tracking-[0.25em] text-mute">— Magaiver Tech, Ceilândia</div>
+              </div>
             </div>
           </div>
         </div>
@@ -444,76 +344,79 @@ function Diferenciais() {
   );
 }
 
-/* ------------------- COUNTERS ------------------- */
+/* ─────────── NUMBERS ─────────── */
 function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [val, setVal] = useState(0);
   useEffect(() => {
     if (!inView) return;
-    const controls = animate(0, to, {
-      duration: 2,
-      ease: "easeOut",
-      onUpdate: (v) => setVal(Math.floor(v)),
-    });
-    return () => controls.stop();
+    const c = animate(0, to, { duration: 2.2, ease: [0.22, 1, 0.36, 1], onUpdate: (v) => setVal(Math.floor(v)) });
+    return () => c.stop();
   }, [inView, to]);
-  return (
-    <span ref={ref} className="font-display text-5xl font-black text-navy sm:text-7xl">
-      {val.toLocaleString("pt-BR")}{suffix}
-    </span>
-  );
+  return <span ref={ref}>{val.toLocaleString("pt-BR")}{suffix}</span>;
 }
 
 function Numbers() {
   const items = [
-    { n: 40, suf: "+", l: "Anos de Experiência" },
-    { n: 5000, suf: "+", l: "Carros Atendidos" },
-    { n: 98, suf: "%", l: "Clientes Satisfeitos" },
-    { n: 6, suf: "", l: "Tipos de Serviço" },
+    { n: 40, suf: "+", l: "Anos de oficina", k: "Desde 1984" },
+    { n: 5000, suf: "+", l: "Carros atendidos", k: "Histórico real" },
+    { n: 98, suf: "%", l: "Clientes satisfeitos", k: "Avaliação direta" },
+    { n: 6, suf: "", l: "Especialidades", k: "Linha completa" },
   ];
   return (
-    <section className="bg-gold py-20">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 sm:grid-cols-2 lg:grid-cols-4">
-        {items.map((it) => (
-          <div key={it.l} className="text-center">
-            <Counter to={it.n} suffix={it.suf} />
-            <div className="mt-3 font-tech text-sm font-bold uppercase tracking-widest text-navy/80">{it.l}</div>
-          </div>
-        ))}
+    <section className="border-y hairline bg-ink py-20 lg:py-28">
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+        <div className="grid grid-cols-2 gap-px bg-line/30 lg:grid-cols-4">
+          {items.map((it, i) => (
+            <motion.div
+              key={it.l}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className="bg-ink p-8 sm:p-10"
+            >
+              <div className="font-body text-[11px] uppercase tracking-[0.25em] text-amber">{it.k}</div>
+              <div className="mt-6 font-display text-5xl font-medium tracking-tight text-cream sm:text-6xl">
+                <Counter to={it.n} suffix={it.suf} />
+              </div>
+              <div className="mt-3 font-body text-[13px] text-cream/55">{it.l}</div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
-/* ------------------- PROCESSO ------------------- */
+/* ─────────── PROCESSO ─────────── */
 function Processo() {
   const steps = [
-    { n: "01", t: "Chame no WhatsApp" },
-    { n: "02", t: "Traga seu veículo" },
-    { n: "03", t: "Diagnóstico preciso" },
-    { n: "04", t: "Problema resolvido" },
+    { n: "01", t: "Você chama", d: "Mande um oi pelo WhatsApp com o sintoma do carro." },
+    { n: "02", t: "Trazemos diagnóstico", d: "Recebemos seu veículo e abrimos uma ordem técnica." },
+    { n: "03", t: "Scanner & análise", d: "Equipamento profissional identifica a causa raiz." },
+    { n: "04", t: "Reparo & entrega", d: "Resolvemos, testamos e devolvemos pronto pra rodar." },
   ];
   return (
-    <section className="py-28">
-      <div className="mx-auto max-w-7xl px-6">
-        <SectionTitle kicker="ETAPAS">Como Funciona</SectionTitle>
-        <div className="relative grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    <section className="bg-ink py-28 lg:py-36">
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+        <SectionLabel num="04" kicker="Processo" title={<>Quatro passos, <span className="font-serif-it text-amber">zero mistério.</span></>} />
+        <div className="grid grid-cols-1 gap-px border hairline bg-line/30 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
             <motion.div
               key={s.n}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="relative text-center"
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className="relative bg-ink p-8 sm:p-10"
             >
-              <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-gold font-display text-2xl font-black text-navy shadow-[0_0_30px_rgba(245,194,0,0.4)]">
-                {s.n}
-              </div>
-              <h3 className="font-display text-lg font-bold uppercase tracking-wide text-white">{s.t}</h3>
+              <div className="font-display text-6xl font-medium text-cream/8 leading-none sm:text-7xl" style={{ color: "rgba(244,241,234,0.06)" }}>{s.n}</div>
+              <h3 className="mt-6 font-display text-xl font-medium text-cream">{s.t}</h3>
+              <p className="mt-3 font-body text-[13px] leading-relaxed text-cream/55">{s.d}</p>
               {i < steps.length - 1 && (
-                <div className="absolute top-10 left-[calc(50%+2.5rem)] hidden h-px w-[calc(100%-5rem)] border-t border-dashed border-gold/60 lg:block" />
+                <ArrowRight className="absolute right-6 top-10 hidden h-4 w-4 text-amber/60 lg:block" />
               )}
             </motion.div>
           ))}
@@ -523,181 +426,170 @@ function Processo() {
   );
 }
 
-/* ------------------- SOBRE / HISTORIA ------------------- */
+/* ─────────── OFICINA / GALERIA ─────────── */
+function Oficina() {
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  return (
+    <section id="oficina" className="relative overflow-hidden bg-ink-soft py-28 lg:py-36">
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+        <SectionLabel
+          num="05"
+          kicker="A oficina"
+          title={<>Bastidores de quem <span className="font-serif-it text-amber">faz acontecer.</span></>}
+          sub="Equipamentos de regulagem de faróis, scanners, elevadores e o estoque sempre pronto. Tudo o que você precisa, num só lugar."
+        />
+        <div className="grid grid-cols-12 gap-4">
+          <motion.div style={{ y }} className="col-span-12 overflow-hidden rounded-2xl border hairline lg:col-span-7 lg:row-span-2">
+            <img src={shop4} alt="Veículo no elevador" className="h-full max-h-[640px] w-full object-cover" loading="lazy" />
+          </motion.div>
+          <div className="col-span-12 overflow-hidden rounded-2xl border hairline sm:col-span-6 lg:col-span-5">
+            <img src={shop2} alt="Regulagem de faróis" className="h-72 w-full object-cover sm:h-80" loading="lazy" />
+          </div>
+          <div className="col-span-12 grid grid-cols-2 gap-4 sm:col-span-6 lg:col-span-5">
+            <div className="overflow-hidden rounded-2xl border hairline">
+              <img src={shop1} alt="Estoque de peças" className="h-44 w-full object-cover sm:h-56" loading="lazy" />
+            </div>
+            <div className="overflow-hidden rounded-2xl border hairline">
+              <img src={shop3} alt="Interior da oficina" className="h-44 w-full object-cover sm:h-56" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────── SOBRE ─────────── */
 function Sobre() {
   return (
-    <section id="sobre" className="bg-navy-soft py-28">
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2 lg:items-center">
-        <div>
-          <SectionTitle kicker="NOSSA HISTÓRIA">A história por trás da tecnologia</SectionTitle>
-          <div className="border-l-2 border-gold pl-6">
-            <p className="font-body text-lg leading-relaxed text-white/80">
-              A MagaiverTech nasceu da paixão por automóveis e da habilidade de resolver problemas que outros deixavam para trás.
-              Com mais de 40 anos no mercado, se tornou referência em elétrica automotiva em Ceilândia – DF, combinando a experiência
-              de décadas com tecnologia de diagnóstico digital de ponta.
-            </p>
+    <section id="sobre" className="bg-ink py-28 lg:py-36">
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+        <div className="grid grid-cols-12 gap-6 lg:gap-12">
+          <div className="col-span-12 lg:col-span-5">
+            <div className="flex items-center gap-3">
+              <span className="font-display text-xs font-medium text-amber">06</span>
+              <div className="h-px w-8 bg-amber" />
+              <span className="font-body text-[11px] font-medium uppercase tracking-[0.3em] text-mute">Nossa história</span>
+            </div>
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full border hairline px-3 py-1.5">
+              <MapPin className="h-3.5 w-3.5 text-amber" />
+              <span className="font-body text-[11px] uppercase tracking-[0.2em] text-cream/70">Ceilândia – DF · desde os anos 80</span>
+            </div>
           </div>
-          <div className="mt-8 inline-flex items-center gap-2 border border-gold/40 bg-navy px-4 py-2">
-            <MapPin className="h-4 w-4 text-gold" />
-            <span className="font-tech text-sm font-semibold tracking-widest text-white">
-              CEILÂNDIA – DF · DESDE OS ANOS 80
-            </span>
+          <div className="col-span-12 lg:col-span-7">
+            <h2 className="font-display text-4xl font-medium leading-[1.1] tracking-tight text-cream sm:text-5xl lg:text-6xl">
+              A história por trás da <span className="font-serif-it text-amber">tecnologia</span>.
+            </h2>
+            <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2">
+              <p className="font-body text-[15px] leading-relaxed text-cream/70">
+                A MagaiverTech nasceu da paixão por automóveis e da habilidade rara de resolver o que outros deixavam para trás.
+                Com quatro décadas no mercado, virou referência em elétrica automotiva no DF.
+              </p>
+              <p className="font-body text-[15px] leading-relaxed text-cream/70">
+                Combinamos a experiência de décadas com equipamentos de diagnóstico digital de ponta. O carro mais antigo ou o
+                mais moderno: aqui, ambos saem rodando.
+              </p>
+            </div>
           </div>
-        </div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="grid grid-cols-2 gap-3"
-        >
-          <img src={shop4} alt="Carro no elevador da MagaiverTech" className="col-span-2 h-64 w-full border border-gold/30 object-cover" loading="lazy" />
-          <img src={shop3} alt="Oficina MagaiverTech" className="h-44 w-full border border-gold/30 object-cover" loading="lazy" />
-          <img src={shop2} alt="Equipamento de regulagem de faróis" className="h-44 w-full border border-gold/30 object-cover" loading="lazy" />
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------- GALERIA ------------------- */
-function Galeria() {
-  const imgs = [
-    { src: shop1, t: "Estoque & Produtos" },
-    { src: shop2, t: "Regulagem de Faróis" },
-    { src: shop3, t: "Elevador & Diagnóstico" },
-    { src: shop4, t: "Suspensão & Alinhamento" },
-  ];
-  return (
-    <section className="py-28">
-      <div className="mx-auto max-w-7xl px-6">
-        <SectionTitle kicker="A OFICINA">Bastidores</SectionTitle>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {imgs.map((im, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="group relative overflow-hidden border border-gold/20"
-            >
-              <img src={im.src} alt={im.t} loading="lazy" className="h-72 w-full object-cover transition duration-700 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent opacity-90" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <div className="font-tech text-xs font-bold tracking-widest text-gold">0{i + 1}</div>
-                <div className="font-display text-base font-bold uppercase text-white">{im.t}</div>
-              </div>
-            </motion.div>
-          ))}
         </div>
       </div>
     </section>
   );
 }
 
-/* ------------------- BIG CTA ------------------- */
+/* ─────────── BIG CTA ─────────── */
 function BigCta() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-navy via-navy-mid to-navy py-28">
-      <HudCircuit opacity={0.35} />
-      <div className="relative mx-auto max-w-5xl px-6 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="font-display text-4xl font-black uppercase leading-tight tracking-tight text-white sm:text-6xl"
-        >
-          Seu carro está <span className="text-gold">falhando?</span>
-        </motion.h2>
-        <p className="mx-auto mt-6 max-w-2xl font-body text-lg text-white/75">
-          A gente resolve. Chame agora e agende seu diagnóstico.
+    <section className="relative overflow-hidden border-y hairline bg-ink-soft py-32 lg:py-40">
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,180,0,0.18),transparent_60%)]" />
+        <div className="grain" />
+      </div>
+      <div className="relative mx-auto max-w-[1100px] px-6 text-center">
+        <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-amber/30 bg-amber/5 px-4 py-1.5 backdrop-blur">
+          <Zap className="h-3.5 w-3.5 text-amber" />
+          <span className="font-body text-[11px] uppercase tracking-[0.3em] text-amber">Pronto pra rodar?</span>
+        </div>
+        <h2 className="mt-8 font-display text-5xl font-medium leading-[1] tracking-tight text-cream sm:text-7xl lg:text-[96px]">
+          Seu carro está
+          <br />
+          <span className="font-serif-it text-amber">falhando?</span> A gente resolve.
+        </h2>
+        <p className="mx-auto mt-8 max-w-xl font-body text-base text-cream/65">
+          Chame agora e agende seu diagnóstico. Atendimento de segunda a sábado, em Ceilândia – DF.
         </p>
-        <a
-          href={WA_URL}
-          target="_blank"
-          rel="noopener"
-          className="mt-10 inline-flex items-center gap-3 bg-gold px-10 py-5 font-display text-base font-black uppercase tracking-widest text-navy animate-gold-pulse"
-        >
-          <Zap className="h-6 w-6" />
-          Falar com Especialista
-        </a>
-        <div className="mt-8 font-tech text-sm tracking-widest text-mute">
-          📍 CEILÂNDIA – DF · ATENDIMENTO DE SEGUNDA A SÁBADO
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
+          <a href={WA_URL} target="_blank" rel="noopener" className="group inline-flex items-center gap-3 rounded-full bg-amber px-8 py-4 font-display text-sm font-semibold text-ink transition hover:shadow-[0_20px_60px_-10px_rgba(245,180,0,0.6)]">
+            Falar com especialista
+            <ArrowUpRight className="h-4 w-4 transition group-hover:rotate-45" />
+          </a>
+          <a href="#contato" className="inline-flex items-center gap-3 rounded-full border hairline px-8 py-4 font-display text-sm text-cream/85 hover:border-cream/40 hover:text-cream">
+            Enviar mensagem
+          </a>
         </div>
       </div>
     </section>
   );
 }
 
-/* ------------------- CONTATO ------------------- */
+/* ─────────── CONTATO ─────────── */
 function Contato() {
   return (
-    <section id="contato" className="bg-navy-soft py-28">
-      <div className="mx-auto max-w-7xl px-6">
-        <SectionTitle kicker="FALE CONOSCO">Contato</SectionTitle>
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+    <section id="contato" className="bg-ink py-28 lg:py-36">
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+        <SectionLabel num="07" kicker="Contato" title={<>Vamos resolver <span className="font-serif-it text-amber">isso?</span></>} />
+        <div className="grid grid-cols-12 gap-6 lg:gap-10">
           <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              window.open(WA_URL, "_blank");
-            }}
-            className="glass-dark p-8"
+            onSubmit={(e) => { e.preventDefault(); window.open(WA_URL, "_blank"); }}
+            className="col-span-12 rounded-2xl border hairline bg-ink-soft/40 p-8 lg:col-span-7 lg:p-10"
           >
-            <div className="grid gap-5 sm:grid-cols-2">
-              <input required placeholder="Nome" className="bg-navy/60 border border-gold/20 px-4 py-3 font-body text-white placeholder:text-mute focus:border-gold focus:outline-none" />
-              <input required placeholder="Telefone" className="bg-navy/60 border border-gold/20 px-4 py-3 font-body text-white placeholder:text-mute focus:border-gold focus:outline-none" />
+            <div className="grid gap-6 sm:grid-cols-2">
+              <Field label="Nome" name="nome" />
+              <Field label="Telefone" name="tel" />
             </div>
-            <select className="mt-5 w-full bg-navy/60 border border-gold/20 px-4 py-3 font-body text-white focus:border-gold focus:outline-none">
-              <option>Elétrica</option>
-              <option>Alinhamento</option>
-              <option>Balanceamento</option>
-              <option>Freios</option>
-              <option>Diagnóstico</option>
-              <option>Outro</option>
-            </select>
-            <textarea rows={5} placeholder="Mensagem" className="mt-5 w-full bg-navy/60 border border-gold/20 px-4 py-3 font-body text-white placeholder:text-mute focus:border-gold focus:outline-none" />
-            <button className="mt-6 w-full bg-gold px-6 py-4 font-display text-sm font-bold uppercase tracking-widest text-navy transition hover:shadow-[0_0_30px_rgba(245,194,0,0.6)]">
+            <div className="mt-6">
+              <label className="font-body text-[11px] uppercase tracking-[0.25em] text-mute">Tipo de serviço</label>
+              <select className="mt-2 w-full appearance-none border-b hairline bg-transparent py-3 font-body text-cream focus:border-amber focus:outline-none">
+                {["Elétrica","Alinhamento","Balanceamento","Freios","Diagnóstico","Outro"].map(o => (
+                  <option key={o} className="bg-ink">{o}</option>
+                ))}
+              </select>
+            </div>
+            <div className="mt-6">
+              <label className="font-body text-[11px] uppercase tracking-[0.25em] text-mute">Mensagem</label>
+              <textarea rows={4} className="mt-2 w-full resize-none border-b hairline bg-transparent py-3 font-body text-cream placeholder:text-mute/60 focus:border-amber focus:outline-none" placeholder="Conte o que está acontecendo..." />
+            </div>
+            <button className="mt-10 inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 font-display text-[13px] font-semibold text-ink transition hover:shadow-[0_20px_50px_-10px_rgba(245,180,0,0.6)]">
               Enviar via WhatsApp
+              <ArrowUpRight className="h-4 w-4" />
             </button>
           </form>
 
-          <div className="flex flex-col gap-6">
-            <div className="glass-dark p-6">
-              <div className="space-y-5">
-                <div className="flex items-start gap-3"><Instagram className="mt-1 h-5 w-5 text-gold" /><div><div className="font-tech text-xs uppercase tracking-widest text-mute">Instagram</div><div className="font-body text-white">@magaivertech</div></div></div>
-                <div className="flex items-start gap-3"><MapPin className="mt-1 h-5 w-5 text-gold" /><div><div className="font-tech text-xs uppercase tracking-widest text-mute">Localização</div><div className="font-body text-white">Ceilândia – DF</div></div></div>
-                <div className="flex items-start gap-3"><Clock className="mt-1 h-5 w-5 text-gold" /><div><div className="font-tech text-xs uppercase tracking-widest text-mute">Horário</div><div className="font-body text-white">Seg a Sáb · Horário comercial</div></div></div>
-                <div className="flex items-start gap-3"><Phone className="mt-1 h-5 w-5 text-gold" /><div><div className="font-tech text-xs uppercase tracking-widest text-mute">WhatsApp</div><div className="font-body text-white">Toque no botão flutuante</div></div></div>
-              </div>
+          <div className="col-span-12 lg:col-span-5">
+            <div className="space-y-px overflow-hidden rounded-2xl border hairline">
+              <InfoRow icon={Instagram} k="Instagram" v="@magaivertech" />
+              <InfoRow icon={MapPin} k="Endereço" v="Ceilândia – DF" />
+              <InfoRow icon={Clock} k="Atendimento" v="Seg – Sáb · horário comercial" />
             </div>
-
-            {/* Stylized map */}
-            <div className="relative h-56 overflow-hidden border border-gold/30 bg-navy">
-              <div
-                className="absolute inset-0 opacity-30"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(#f5c200 1px, transparent 1px), linear-gradient(90deg, #f5c200 1px, transparent 1px)",
-                  backgroundSize: "32px 32px",
-                }}
-              />
-              <div
-                className="absolute inset-0 opacity-60"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(45deg, transparent 48%, rgba(245,194,0,0.35) 49%, rgba(245,194,0,0.35) 51%, transparent 52%), linear-gradient(-45deg, transparent 48%, rgba(245,194,0,0.2) 49%, rgba(245,194,0,0.2) 51%, transparent 52%)",
-                  backgroundSize: "120px 120px",
-                }}
-              />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="relative mt-6 h-64 overflow-hidden rounded-2xl border hairline bg-ink-soft">
+              <div className="absolute inset-0 opacity-25" style={{
+                backgroundImage: "linear-gradient(rgba(245,180,0,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(245,180,0,0.6) 1px, transparent 1px)",
+                backgroundSize: "40px 40px",
+              }} />
+              <div className="absolute inset-0 opacity-50" style={{
+                backgroundImage: "linear-gradient(45deg, transparent 49%, rgba(245,180,0,0.4) 50%, transparent 51%)",
+                backgroundSize: "160px 160px",
+              }} />
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                 <div className="relative">
-                  <div className="absolute inset-0 h-12 w-12 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full bg-gold/40" />
-                  <MapPin className="relative h-10 w-10 text-gold drop-shadow-[0_0_10px_#f5c200]" />
+                  <span className="absolute inset-0 -m-3 animate-ping rounded-full bg-amber/30" />
+                  <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-amber text-ink shadow-[0_0_30px_rgba(245,180,0,0.6)]">
+                    <MapPin className="h-5 w-5" />
+                  </div>
                 </div>
               </div>
-              <div className="absolute bottom-3 left-3 font-tech text-xs font-bold tracking-widest text-gold">CEILÂNDIA · DF</div>
+              <div className="absolute bottom-4 left-5 font-body text-[11px] uppercase tracking-[0.25em] text-amber">Ceilândia · DF</div>
             </div>
           </div>
         </div>
@@ -706,28 +598,74 @@ function Contato() {
   );
 }
 
-/* ------------------- FOOTER ------------------- */
-function Footer() {
+function Field({ label, name }: { label: string; name: string }) {
   return (
-    <footer className="border-t-2 border-gold bg-[#050810] py-10">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 md:flex-row">
-        <div className="font-display text-lg font-black tracking-wider">
-          <span className="text-gold">M</span>AGAIVER <span className="text-gold">T</span>ECH
-        </div>
-        <div className="font-body text-sm italic text-mute">"Seu carro falhando? A gente resolve."</div>
-        <div className="flex items-center gap-4">
-          <a href="https://instagram.com/magaivertech" target="_blank" rel="noopener" className="text-gold hover:text-gold-glow"><Instagram className="h-5 w-5" /></a>
-          <a href={WA_URL} target="_blank" rel="noopener" className="text-gold hover:text-gold-glow"><MessageCircle className="h-5 w-5" /></a>
+    <div>
+      <label className="font-body text-[11px] uppercase tracking-[0.25em] text-mute">{label}</label>
+      <input name={name} required className="mt-2 w-full border-b hairline bg-transparent py-3 font-body text-cream placeholder:text-mute/60 focus:border-amber focus:outline-none" />
+    </div>
+  );
+}
+
+function InfoRow({ icon: Icon, k, v }: { icon: any; k: string; v: string }) {
+  return (
+    <div className="flex items-center justify-between bg-ink-soft/40 p-5">
+      <div className="flex items-center gap-4">
+        <Icon className="h-4 w-4 text-amber" />
+        <div>
+          <div className="font-body text-[10px] uppercase tracking-[0.25em] text-mute">{k}</div>
+          <div className="font-body text-sm text-cream">{v}</div>
         </div>
       </div>
-      <div className="mt-6 text-center font-tech text-xs tracking-widest text-mute">
-        © 2025 MAGAIVERTECH. TODOS OS DIREITOS RESERVADOS.
+      <ArrowUpRight className="h-4 w-4 text-mute" />
+    </div>
+  );
+}
+
+/* ─────────── FOOTER ─────────── */
+function Footer() {
+  return (
+    <footer className="bg-[#050810] py-16">
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+        <div className="grid grid-cols-12 gap-6 border-t-2 border-amber pt-12">
+          <div className="col-span-12 lg:col-span-5">
+            <div className="font-display text-3xl font-medium tracking-tight text-cream">
+              Magaiver<span className="text-amber">Tech</span>
+            </div>
+            <p className="mt-4 max-w-sm font-serif-it text-xl text-cream/80">
+              Seu carro falhando? <span className="text-amber">A gente resolve.</span>
+            </p>
+          </div>
+          <div className="col-span-6 lg:col-span-3">
+            <div className="font-body text-[11px] uppercase tracking-[0.25em] text-mute">Navegue</div>
+            <ul className="mt-4 space-y-2">
+              {["Serviços", "Diferenciais", "Oficina", "Sobre", "Contato"].map(l => (
+                <li key={l}><a href={`#${l.toLowerCase()}`} className="font-body text-sm text-cream/70 hover:text-amber">{l}</a></li>
+              ))}
+            </ul>
+          </div>
+          <div className="col-span-6 lg:col-span-4">
+            <div className="font-body text-[11px] uppercase tracking-[0.25em] text-mute">Contato</div>
+            <ul className="mt-4 space-y-2 font-body text-sm text-cream/70">
+              <li>Ceilândia – DF</li>
+              <li>Seg – Sáb · comercial</li>
+              <li><a href="https://instagram.com/magaivertech" className="hover:text-amber">@magaivertech</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t hairline pt-6 sm:flex-row sm:items-center">
+          <div className="font-body text-xs text-mute">© 2025 MagaiverTech. Todos os direitos reservados.</div>
+          <div className="flex items-center gap-4">
+            <a href="https://instagram.com/magaivertech" className="text-cream/70 hover:text-amber"><Instagram className="h-4 w-4" /></a>
+            <a href={WA_URL} className="font-body text-xs uppercase tracking-[0.25em] text-cream/70 hover:text-amber">WhatsApp ↗</a>
+          </div>
+        </div>
       </div>
     </footer>
   );
 }
 
-/* ------------------- WHATSAPP FAB ------------------- */
+/* ─────────── WHATSAPP FAB ─────────── */
 function WhatsAppFab() {
   return (
     <a
@@ -735,44 +673,45 @@ function WhatsAppFab() {
       target="_blank"
       rel="noopener"
       aria-label="WhatsApp"
-      className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gold text-navy shadow-[0_0_30px_rgba(245,194,0,0.6)] animate-gold-pulse transition hover:scale-110"
+      className="group fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-full bg-amber px-5 py-3.5 font-display text-[13px] font-semibold text-ink shadow-[0_20px_50px_-10px_rgba(245,180,0,0.6)] transition hover:shadow-[0_30px_60px_-10px_rgba(245,180,0,0.7)]"
     >
-      <MessageCircle className="h-7 w-7" />
+      <span className="relative flex h-2 w-2">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ink/60" />
+        <span className="relative inline-flex h-2 w-2 rounded-full bg-ink" />
+      </span>
+      WhatsApp
     </a>
   );
 }
 
-/* ------------------- HOME ------------------- */
+/* ─────────── HOME ─────────── */
 function Home() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <Credibility />
-      <Services />
-      <Diferenciais />
-      <Numbers />
-      <Processo />
-      <Sobre />
-      <Galeria />
-      <BigCta />
-      <Contato />
+      <main>
+        <Hero />
+        <Marquee />
+        <Services />
+        <Diferenciais />
+        <Numbers />
+        <Processo />
+        <Oficina />
+        <Sobre />
+        <BigCta />
+        <Contato />
+      </main>
       <Footer />
       <WhatsAppFab />
     </>
   );
 }
 
-/* ------------------- APP ------------------- */
+/* ─────────── APP ─────────── */
 export default function App() {
-  const [loading, setLoading] = useState(true);
   return (
     <>
-      <AnimatePresence>
-        {loading && <LoadingScreen key="loader" onDone={() => setLoading(false)} />}
-      </AnimatePresence>
       <ScrollProgress />
-      <CustomCursor />
       <Routes>
         <Route path="*" element={<Home />} />
       </Routes>
