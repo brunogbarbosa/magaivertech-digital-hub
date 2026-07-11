@@ -3,17 +3,33 @@ import { Routes, Route } from "react-router-dom";
 import { motion, useScroll, useSpring, useInView, animate, useTransform } from "framer-motion";
 import {
   Zap, Target, Scale, Lightbulb, Disc, ScanLine, Instagram, MapPin, Clock,
-  ArrowUpRight, ArrowRight, Plus, Wrench, Cog, Sparkles, Star,
+  ArrowUpRight, ArrowRight, Plus, Wrench, Cog, Sparkles, Star, Play, X,
 } from "lucide-react";
 import shop1 from "@/assets/shop-1.png";
 import shop2 from "@/assets/shop-2.png";
 import shop3 from "@/assets/shop-3.png";
 import shop4 from "@/assets/shop-4.png";
-import logoAsset from "@/assets/magaiver-logo.png";
 import farolAsset from "@/assets/farol-machine.png";
+import logoAsset from "@/assets/client/auto-center-magaiver-tech-logo.png";
+import clientFacade from "@/assets/client/fachada-auto-center-magaiver-tech.webp";
+import clientClassicCar from "@/assets/client/cliente-carro-classico-magaiver-tech.webp";
+import clientToyota from "@/assets/client/servico-toyota-magaiver-tech.webp";
+import clientParts from "@/assets/client/pecas-eletricas-magaiver-tech.webp";
+import clientVideo from "@/assets/client/video-auto-center-magaiver-tech.mp4";
 
 const WHATSAPP = "5561981406061";
 const WA_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Olá MagaiverTech! Quero agendar um serviço.")}`;
+const LOCATION_ADDRESS = "St. M QNM 09 Conj. H Lote 39, Ceilândia, DF";
+const MAP_QUERY = encodeURIComponent(LOCATION_ADDRESS);
+const GOOGLE_MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`;
+const GOOGLE_MAPS_EMBED_URL = `https://www.google.com/maps?q=${MAP_QUERY}&output=embed`;
+
+const clientGallery = [
+  { src: clientFacade, alt: "Fachada da Auto Center Magaiver Tech em Ceilândia", span: "lg:col-span-7 lg:row-span-2", imageClass: "h-full min-h-[360px] max-h-[640px]" },
+  { src: clientClassicCar, alt: "Cliente ao lado de carro clássico atendido pela Auto Center Magaiver Tech", span: "sm:col-span-6 lg:col-span-5", imageClass: "h-72 sm:h-80" },
+  { src: clientToyota, alt: "Toyota em atendimento com capô aberto na Auto Center Magaiver Tech", span: "sm:col-span-3 lg:col-span-3", imageClass: "h-56 sm:h-64" },
+  { src: clientParts, alt: "Peças elétricas automotivas durante manutenção na Auto Center Magaiver Tech", span: "sm:col-span-3 lg:col-span-2", imageClass: "h-56 sm:h-64" },
+];
 
 /* ─────────── SCROLL PROGRESS ─────────── */
 function ScrollProgress() {
@@ -50,8 +66,8 @@ function Navbar() {
     >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5 lg:px-10">
         <a href="#" className="group flex items-center gap-3">
-          <img src={logoAsset} alt="MagaiverTech" className="h-11 w-11 object-contain" />
-          <div className="flex flex-col leading-none">
+          <img src={logoAsset} alt="Auto Center Magaiver Tech" className="h-12 w-auto max-w-[150px] object-contain sm:h-14 sm:max-w-[180px]" />
+          <div className="hidden flex-col leading-none sm:flex">
             <span className="font-display text-[15px] font-semibold tracking-tight text-cream">Magaiver<span className="text-amber">Tech</span></span>
             <span className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.2em] text-mute">Auto Center · DF</span>
           </div>
@@ -68,7 +84,7 @@ function Navbar() {
           href={WA_URL}
           target="_blank"
           rel="noopener"
-          className="group inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/10 px-5 py-2.5 font-display text-[12px] font-semibold tracking-tight text-amber backdrop-blur transition hover:bg-amber hover:text-ink"
+          className="group inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/10 px-4 py-2.5 font-display text-[12px] font-semibold tracking-tight text-amber backdrop-blur transition hover:bg-amber hover:text-ink sm:px-5"
         >
           Agendar
           <ArrowUpRight className="h-3.5 w-3.5 transition group-hover:rotate-45" />
@@ -433,6 +449,8 @@ function Processo() {
 function Oficina() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const [activeImage, setActiveImage] = useState<(typeof clientGallery)[number] | null>(null);
+
   return (
     <section id="oficina" className="relative overflow-hidden bg-ink-soft py-28 lg:py-36">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
@@ -443,23 +461,111 @@ function Oficina() {
           sub="Equipamentos de regulagem de faróis, scanners, elevadores e o estoque sempre pronto. Tudo o que você precisa, num só lugar."
         />
         <div className="grid grid-cols-12 gap-4">
-          <motion.div style={{ y }} className="col-span-12 overflow-hidden rounded-2xl border hairline lg:col-span-7 lg:row-span-2">
-            <img src={shop4} alt="Veículo no elevador" className="h-full max-h-[640px] w-full object-cover" loading="lazy" />
-          </motion.div>
-          <div className="col-span-12 overflow-hidden rounded-2xl border hairline sm:col-span-6 lg:col-span-5">
-            <img src={shop2} alt="Regulagem de faróis" className="h-72 w-full object-cover sm:h-80" loading="lazy" />
+          {clientGallery.map((item, index) => {
+            const content = (
+                <button
+                  type="button"
+                  onClick={() => setActiveImage(item)}
+                  className="group relative block h-full w-full cursor-zoom-in text-left"
+                  aria-label={`Ampliar imagem: ${item.alt}`}
+                >
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className={`${item.imageClass} w-full object-cover transition duration-700 group-hover:scale-[1.03]`}
+                    loading={index === 0 ? "eager" : "lazy"}
+                  />
+                  <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/65 via-transparent to-transparent opacity-70" />
+                  <span className="pointer-events-none absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-cream/20 bg-ink/70 px-3 py-1.5 font-body text-[10px] uppercase tracking-[0.22em] text-cream/80 backdrop-blur">
+                    Ampliar
+                    <ArrowUpRight className="h-3 w-3 text-amber" />
+                  </span>
+                </button>
+            );
+
+            return index === 0 ? (
+              <motion.div
+                key={item.src}
+                style={{ y }}
+                className={`col-span-12 overflow-hidden rounded-2xl border hairline bg-ink ${item.span}`}
+              >
+                {content}
+              </motion.div>
+            ) : (
+              <div key={item.src} className={`col-span-12 overflow-hidden rounded-2xl border hairline bg-ink ${item.span}`}>
+                {content}
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-4 grid grid-cols-12 gap-4">
+          <div className="col-span-12 overflow-hidden rounded-2xl border hairline bg-ink lg:col-span-7">
+            <div className="relative">
+              <video
+                className="aspect-video w-full bg-black object-contain"
+                controls
+                playsInline
+                preload="metadata"
+                poster={clientFacade}
+                aria-label="Vídeo da Auto Center Magaiver Tech"
+              >
+                <source src={clientVideo} type="video/mp4" />
+              </video>
+              <div className="pointer-events-none absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-amber/40 bg-ink/75 px-3 py-1.5 backdrop-blur">
+                <Play className="h-3.5 w-3.5 fill-amber text-amber" />
+                <span className="font-body text-[10px] uppercase tracking-[0.25em] text-amber">Vídeo do cliente</span>
+              </div>
+            </div>
           </div>
-          <div className="col-span-12 grid grid-cols-2 gap-4 sm:col-span-6 lg:col-span-5">
-            <div className="overflow-hidden rounded-2xl border hairline">
-              <img src={shop1} alt="Estoque de peças" className="h-44 w-full object-cover sm:h-56" loading="lazy" />
+          <div className="col-span-12 flex flex-col justify-between rounded-2xl border hairline bg-ink/70 p-6 lg:col-span-5 lg:p-8">
+            <div>
+              <div className="font-body text-[11px] uppercase tracking-[0.28em] text-amber">Mídias reais</div>
+              <h3 className="mt-4 font-display text-3xl font-medium leading-tight text-cream">Fotos e vídeo enviados pelo cliente.</h3>
             </div>
-            <div className="overflow-hidden rounded-2xl border hairline">
-              <img src={shop3} alt="Interior da oficina" className="h-44 w-full object-cover sm:h-56" loading="lazy" />
-            </div>
+            <p className="mt-6 font-body text-[14px] leading-relaxed text-cream/60">
+              As imagens abrem ampliadas sem sair do site. O vídeo não inicia automaticamente e só carrega os dados essenciais até você reproduzir.
+            </p>
           </div>
         </div>
       </div>
+      {activeImage && <MediaLightbox item={activeImage} onClose={() => setActiveImage(null)} />}
     </section>
+  );
+}
+
+function MediaLightbox({ item, onClose }: { item: (typeof clientGallery)[number]; onClose: () => void }) {
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-ink/95 p-4 backdrop-blur-md"
+      role="dialog"
+      aria-modal="true"
+      aria-label={item.alt}
+      onClick={onClose}
+    >
+      <button
+        type="button"
+        onClick={onClose}
+        className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-cream/20 bg-ink-soft text-cream transition hover:border-amber hover:text-amber"
+        aria-label="Fechar imagem ampliada"
+      >
+        <X className="h-5 w-5" />
+      </button>
+      <img
+        src={item.src}
+        alt={item.alt}
+        className="max-h-[86vh] max-w-[94vw] rounded-2xl object-contain shadow-[0_30px_120px_rgba(0,0,0,0.55)]"
+        onClick={(event) => event.stopPropagation()}
+      />
+    </div>
   );
 }
 
@@ -572,27 +678,30 @@ function Contato() {
           <div className="col-span-12 lg:col-span-5">
             <div className="space-y-px overflow-hidden rounded-2xl border hairline">
               <InfoRow icon={Instagram} k="Instagram" v="@magaivertech" />
-              <InfoRow icon={MapPin} k="Endereço" v="Ceilândia – DF" />
-              <InfoRow icon={Clock} k="Atendimento" v="Seg – Sáb · horário comercial" />
+              <InfoRow icon={MapPin} k="Endereço" v={LOCATION_ADDRESS} />
+              <InfoRow icon={Clock} k="Atendimento" v="Segunda a sábado — horário comercial" />
             </div>
-            <div className="relative mt-6 h-64 overflow-hidden rounded-2xl border hairline bg-ink-soft">
-              <div className="absolute inset-0 opacity-25" style={{
-                backgroundImage: "linear-gradient(rgba(245,180,0,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(245,180,0,0.6) 1px, transparent 1px)",
-                backgroundSize: "40px 40px",
-              }} />
-              <div className="absolute inset-0 opacity-50" style={{
-                backgroundImage: "linear-gradient(45deg, transparent 49%, rgba(245,180,0,0.4) 50%, transparent 51%)",
-                backgroundSize: "160px 160px",
-              }} />
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div className="relative">
-                  <span className="absolute inset-0 -m-3 animate-ping rounded-full bg-amber/30" />
-                  <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-amber text-ink shadow-[0_0_30px_rgba(245,180,0,0.6)]">
-                    <MapPin className="h-5 w-5" />
-                  </div>
-                </div>
+            <div className="mt-6 overflow-hidden rounded-2xl border hairline bg-ink-soft">
+              <iframe
+                title="Mapa da Auto Center Magaiver Tech em Ceilândia"
+                src={GOOGLE_MAPS_EMBED_URL}
+                className="h-72 w-full border-0 grayscale-[20%] sm:h-80"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+              <div className="flex flex-col gap-4 border-t hairline bg-ink-soft/80 p-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="font-body text-[12px] leading-relaxed text-cream/65">{LOCATION_ADDRESS}</div>
+                <a
+                  href={GOOGLE_MAPS_URL}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-amber px-5 py-3 font-display text-[12px] font-semibold text-ink transition hover:shadow-[0_18px_40px_-12px_rgba(245,180,0,0.7)]"
+                >
+                  Como chegar
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </a>
               </div>
-              <div className="absolute bottom-4 left-5 font-body text-[11px] uppercase tracking-[0.25em] text-amber">Ceilândia · DF</div>
             </div>
           </div>
         </div>
@@ -612,15 +721,15 @@ function Field({ label, name }: { label: string; name: string }) {
 
 function InfoRow({ icon: Icon, k, v }: { icon: any; k: string; v: string }) {
   return (
-    <div className="flex items-center justify-between bg-ink-soft/40 p-5">
-      <div className="flex items-center gap-4">
-        <Icon className="h-4 w-4 text-amber" />
-        <div>
+    <div className="flex items-start justify-between gap-4 bg-ink-soft/40 p-5">
+      <div className="flex min-w-0 items-start gap-4">
+        <Icon className="mt-1 h-4 w-4 shrink-0 text-amber" />
+        <div className="min-w-0">
           <div className="font-body text-[10px] uppercase tracking-[0.25em] text-mute">{k}</div>
-          <div className="font-body text-sm text-cream">{v}</div>
+          <div className="break-words font-body text-sm leading-relaxed text-cream">{v}</div>
         </div>
       </div>
-      <ArrowUpRight className="h-4 w-4 text-mute" />
+      <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-mute" />
     </div>
   );
 }
@@ -632,9 +741,7 @@ function Footer() {
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
         <div className="grid grid-cols-12 gap-6 border-t-2 border-amber pt-12">
           <div className="col-span-12 lg:col-span-5">
-            <div className="font-display text-3xl font-medium tracking-tight text-cream">
-              Magaiver<span className="text-amber">Tech</span>
-            </div>
+            <img src={logoAsset} alt="Auto Center Magaiver Tech" className="h-20 w-auto max-w-[240px] object-contain" loading="lazy" />
             <p className="mt-4 max-w-sm font-serif-it text-xl text-cream/80">
               Seu carro falhando? <span className="text-amber">A gente resolve.</span>
             </p>
@@ -650,8 +757,8 @@ function Footer() {
           <div className="col-span-6 lg:col-span-4">
             <div className="font-body text-[11px] uppercase tracking-[0.25em] text-mute">Contato</div>
             <ul className="mt-4 space-y-2 font-body text-sm text-cream/70">
-              <li>Ceilândia – DF</li>
-              <li>Seg – Sáb · comercial</li>
+              <li>{LOCATION_ADDRESS}</li>
+              <li>Segunda a sábado — horário comercial</li>
               <li><a href="https://instagram.com/magaivertech" className="hover:text-amber">@magaivertech</a></li>
             </ul>
           </div>
@@ -830,9 +937,9 @@ function GptProof() {
                   className="ml-11 mt-4 overflow-hidden rounded-xl border border-amber/30 bg-ink"
                 >
                   <div className="grid grid-cols-3 gap-px bg-line/40">
-                    <img src={shop1} alt="" className="h-24 w-full object-cover bg-ink" />
-                    <img src={shop4} alt="" className="h-24 w-full object-cover bg-ink" />
-                    <img src={shop3} alt="" className="h-24 w-full object-cover bg-ink" />
+                    <img src={shop1} alt="Estoque de peças da oficina" className="h-24 w-full object-cover bg-ink" />
+                    <img src={shop4} alt="Veículo em atendimento no elevador" className="h-24 w-full object-cover bg-ink" />
+                    <img src={shop3} alt="Interior da oficina Magaiver Tech" className="h-24 w-full object-cover bg-ink" />
                   </div>
                   <div className="p-5">
                     <div className="font-display text-lg font-semibold text-cream">
