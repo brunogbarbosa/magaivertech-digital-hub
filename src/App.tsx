@@ -204,33 +204,6 @@ function Hero() {
   );
 }
 
-/* ─────────── MARQUEE ─────────── */
-function Marquee() {
-  const items = [
-    "Elétrica Automotiva",
-    "Mecânica Geral",
-    "Alinhamento Computadorizado",
-    "Balanceamento Eletrônico",
-    "Regulagem de Faróis",
-    "Sistema de Freios",
-    "Suspensão",
-    "Diagnóstico Scanner",
-  ];
-  const tripled = [...items, ...items, ...items];
-  return (
-    <section className="border-y hairline bg-ink py-7 overflow-hidden">
-      <div className="flex w-max animate-marquee items-center gap-12 whitespace-nowrap">
-        {tripled.map((t, i) => (
-          <span key={i} className="flex items-center gap-12">
-            <span className="font-serif-it text-2xl text-cream/70 sm:text-3xl">{t}</span>
-            <Plus className="h-4 w-4 text-amber" />
-          </span>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 /* ─────────── SECTION LABEL ─────────── */
 function SectionLabel({ num, kicker, title, sub }: { num: string; kicker: string; title: React.ReactNode; sub?: string }) {
   return (
@@ -998,7 +971,6 @@ function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Marquee />
         <Services />
         <Farol />
         <Diferenciais />
