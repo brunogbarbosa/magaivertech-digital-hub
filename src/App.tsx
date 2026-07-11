@@ -9,7 +9,6 @@ import shop1 from "@/assets/shop-1.png";
 import shop2 from "@/assets/shop-2.png";
 import shop3 from "@/assets/shop-3.png";
 import shop4 from "@/assets/shop-4.png";
-import farolAsset from "@/assets/farol-machine.png";
 import logoAsset from "@/assets/client/auto-center-magaiver-tech-logo.png";
 import clientFacade from "@/assets/client/fachada-auto-center-magaiver-tech.webp";
 import clientClassicCar from "@/assets/client/cliente-carro-classico-magaiver-tech.webp";
@@ -26,9 +25,9 @@ const GOOGLE_MAPS_EMBED_URL = `https://www.google.com/maps?q=${MAP_QUERY}&output
 
 const clientGallery = [
   { src: clientFacade, alt: "Fachada da Auto Center Magaiver Tech em Ceilândia", span: "lg:col-span-7 lg:row-span-2", imageClass: "h-full min-h-[360px] max-h-[640px]" },
-  { src: clientClassicCar, alt: "Cliente ao lado de carro clássico atendido pela Auto Center Magaiver Tech", span: "sm:col-span-6 lg:col-span-5", imageClass: "h-72 sm:h-80" },
-  { src: clientToyota, alt: "Toyota em atendimento com capô aberto na Auto Center Magaiver Tech", span: "sm:col-span-3 lg:col-span-3", imageClass: "h-56 sm:h-64" },
-  { src: clientParts, alt: "Peças elétricas automotivas durante manutenção na Auto Center Magaiver Tech", span: "sm:col-span-3 lg:col-span-2", imageClass: "h-56 sm:h-64" },
+  { src: shop4, alt: "Veículo em atendimento no elevador da oficina", span: "sm:col-span-6 lg:col-span-5", imageClass: "h-72 sm:h-80" },
+  { src: shop2, alt: "Equipamento técnico de regulagem e diagnóstico na oficina", span: "sm:col-span-3 lg:col-span-3", imageClass: "h-56 sm:h-64" },
+  { src: shop3, alt: "Interior da oficina Auto Center Magaiver Tech", span: "sm:col-span-3 lg:col-span-2", imageClass: "h-56 sm:h-64" },
 ];
 
 /* ─────────── SCROLL PROGRESS ─────────── */
@@ -52,6 +51,7 @@ function Navbar() {
     return () => window.removeEventListener("scroll", h);
   }, []);
   const links = [
+    { l: "Legado", h: "#legado" },
     { l: "Serviços", h: "#servicos" },
     { l: "Diferenciais", h: "#diferenciais" },
     { l: "Oficina", h: "#oficina" },
@@ -72,7 +72,7 @@ function Navbar() {
             <span className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.2em] text-mute">Auto Center · DF</span>
           </div>
         </a>
-        <nav className="hidden items-center gap-9 lg:flex">
+        <nav className="hidden items-center gap-7 xl:gap-9 lg:flex">
           {links.map((l) => (
             <a key={l.h} href={l.h} className="group relative font-body text-[13px] font-medium text-cream/70 transition hover:text-cream">
               {l.l}
@@ -204,6 +204,70 @@ function Hero() {
   );
 }
 
+/* ─────────── LEGADO ─────────── */
+function Legacy() {
+  return (
+    <section id="legado" className="relative overflow-hidden border-y hairline bg-ink-soft py-24 lg:py-32">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(245,180,0,0.12),transparent_55%)]" />
+      <div className="grain" />
+      <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10">
+        <div className="grid grid-cols-12 items-center gap-8 lg:gap-14">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7 }}
+            className="col-span-12 lg:col-span-5"
+          >
+            <div className="relative overflow-hidden rounded-2xl border hairline bg-ink">
+              <img
+                src={clientClassicCar}
+                alt="Pai do cliente ao lado de um carro antigo, símbolo do legado da Auto Center Magaiver Tech"
+                className="h-[360px] w-full object-cover object-center sm:h-[460px] lg:h-[560px]"
+                loading="eager"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />
+              <div className="absolute bottom-5 left-5 right-5">
+                <div className="font-body text-[11px] uppercase tracking-[0.26em] text-amber">Uma história de família</div>
+                <div className="mt-2 font-display text-2xl font-medium text-cream">O começo de tudo</div>
+              </div>
+            </div>
+          </motion.div>
+
+          <div className="col-span-12 lg:col-span-7">
+            <div className="flex items-center gap-3">
+              <span className="font-display text-xs font-medium text-amber">02</span>
+              <div className="h-px w-8 bg-amber" />
+              <span className="font-body text-[11px] font-medium uppercase tracking-[0.3em] text-mute">Nosso legado</span>
+            </div>
+            <h2 className="mt-6 max-w-3xl font-display text-4xl font-medium leading-[1.05] tracking-tight text-cream sm:text-5xl lg:text-6xl">
+              Uma base ensinada <span className="font-serif-it text-amber">desde criança.</span>
+            </h2>
+            <div className="mt-8 grid gap-6 font-body text-[15px] leading-relaxed text-cream/70 sm:grid-cols-2">
+              <p>
+                A Auto Center Magaiver Tech carrega uma história construída com dedicação, experiência e ensinamentos passados de geração em geração.
+                Grande parte dessa trajetória começou com o pai, que desde cedo transmitiu conhecimento, valores e amor pelo trabalho automotivo.
+              </p>
+              <p>
+                Hoje, a empresa segue esse legado com orgulho, unindo tradição, confiança e excelência no atendimento. Cada diagnóstico e cada reparo
+                carregam essa base: fazer bem feito, com respeito pela história e pelo cliente.
+              </p>
+            </div>
+            <div className="mt-10 grid gap-px border hairline bg-line/30 sm:grid-cols-3">
+              {["Tradição", "Confiança", "Excelência"].map((item) => (
+                <div key={item} className="bg-ink/70 p-5">
+                  <div className="font-display text-lg font-medium text-amber">{item}</div>
+                  <div className="mt-2 font-body text-[12px] uppercase tracking-[0.18em] text-mute">legado em cada serviço</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────── SECTION LABEL ─────────── */
 function SectionLabel({ num, kicker, title, sub }: { num: string; kicker: string; title: React.ReactNode; sub?: string }) {
   return (
@@ -225,11 +289,11 @@ function SectionLabel({ num, kicker, title, sub }: { num: string; kicker: string
 
 /* ─────────── SERVICES ─────────── */
 const services = [
-  { Icon: Zap, t: "Elétrica Automotiva", d: "Diagnóstico computadorizado e reparo de todo o sistema elétrico." },
+  { Icon: Zap, t: "Elétrica Automotiva", d: "Diagnóstico de alternador, bateria, sistema de carga e reparo elétrico completo." },
   { Icon: Wrench, t: "Mecânica Geral", d: "Motor, embreagem, câmbio, suspensão e revisões completas." },
   { Icon: Target, t: "Alinhamento", d: "Alinhamento computadorizado de precisão para sua segurança." },
   { Icon: Scale, t: "Balanceamento", d: "Balanceamento eletrônico eliminando vibrações na direção." },
-  { Icon: Lightbulb, t: "Regulagem de Faróis", d: "Equipamento exclusivo para ajuste técnico de farol." },
+  { Icon: Lightbulb, t: "Regulagem de Faróis", d: "Ajuste técnico do feixe de luz com equipamento adequado." },
   { Icon: Disc, t: "Sistema de Freios", d: "Pastilhas, discos, fluido, cabos e revisão completa." },
 ];
 
@@ -268,6 +332,36 @@ function Services() {
               <div className="absolute right-0 bottom-0 h-12 w-12 origin-bottom-right scale-0 bg-amber transition-transform duration-500 group-hover:scale-100" style={{ clipPath: "polygon(100% 0, 100% 100%, 0 100%)" }} />
             </motion.article>
           ))}
+        </div>
+        <div className="mt-10 grid grid-cols-12 overflow-hidden rounded-2xl border hairline bg-ink-soft/50">
+          <div className="col-span-12 lg:col-span-5">
+            <img
+              src={clientParts}
+              alt="Alternador e componentes elétricos automotivos em manutenção na Auto Center Magaiver Tech"
+              className="h-80 w-full object-cover sm:h-[420px] lg:h-full"
+              loading="lazy"
+            />
+          </div>
+          <div className="col-span-12 flex flex-col justify-center p-8 lg:col-span-7 lg:p-12">
+            <div className="flex items-center gap-3">
+              <Zap className="h-4 w-4 text-amber" />
+              <span className="font-body text-[11px] uppercase tracking-[0.28em] text-amber">Elétrica automotiva real</span>
+            </div>
+            <h3 className="mt-5 max-w-2xl font-display text-3xl font-medium leading-tight text-cream sm:text-4xl">
+              Diagnóstico elétrico com atenção ao sistema de carga.
+            </h3>
+            <p className="mt-5 max-w-2xl font-body text-[15px] leading-relaxed text-cream/65">
+              A foto mostra componentes reais de manutenção elétrica: alternador, regulador, chicotes e ferramentas de bancada.
+              Esse cuidado reforça o serviço de diagnóstico de falhas, bateria, alternador e sistema de carga antes de qualquer reparo.
+            </p>
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              {["Alternador", "Bateria", "Sistema de carga"].map((item) => (
+                <div key={item} className="rounded-full border border-amber/25 bg-amber/5 px-4 py-2 text-center font-body text-[11px] uppercase tracking-[0.18em] text-cream/75">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -429,9 +523,9 @@ function Oficina() {
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
         <SectionLabel
           num="05"
-          kicker="A oficina"
-          title={<>Bastidores de quem <span className="font-serif-it text-amber">faz acontecer.</span></>}
-          sub="Equipamentos de regulagem de faróis, scanners, elevadores e o estoque sempre pronto. Tudo o que você precisa, num só lugar."
+          kicker="Bastidores reais"
+          title={<>A estrutura por trás de cada <span className="font-serif-it text-amber">serviço entregue.</span></>}
+          sub="Depois dos destaques de história, elétrica e faróis, esta área reúne fachada, rotina e ambiente real da oficina para mostrar onde o atendimento acontece."
         />
         <div className="grid grid-cols-12 gap-4">
           {clientGallery.map((item, index) => {
@@ -494,10 +588,11 @@ function Oficina() {
           <div className="col-span-12 flex flex-col justify-between rounded-2xl border hairline bg-ink/70 p-6 lg:col-span-5 lg:p-8">
             <div>
               <div className="font-body text-[11px] uppercase tracking-[0.28em] text-amber">Mídias reais</div>
-              <h3 className="mt-4 font-display text-3xl font-medium leading-tight text-cream">Fotos e vídeo enviados pelo cliente.</h3>
+              <h3 className="mt-4 font-display text-3xl font-medium leading-tight text-cream">Bastidores da oficina em funcionamento.</h3>
             </div>
             <p className="mt-6 font-body text-[14px] leading-relaxed text-cream/60">
-              As imagens abrem ampliadas sem sair do site. O vídeo não inicia automaticamente e só carrega os dados essenciais até você reproduzir.
+              O vídeo e as imagens complementam as seções principais: fachada, rotina de atendimento e estrutura real da Auto Center Magaiver Tech.
+              O player não inicia automaticamente e mantém controles visíveis.
             </p>
           </div>
         </div>
@@ -762,11 +857,16 @@ function Farol() {
             className="col-span-12 lg:col-span-6 relative"
           >
             <div className="relative overflow-hidden rounded-2xl border hairline">
-              <img src={farolAsset} alt="Máquina de regulagem de farol" className="w-full h-[460px] object-cover sm:h-[560px]" />
+              <img
+                src={clientToyota}
+                alt="Carro branco em atendimento com equipamento de regulagem de faróis na Auto Center Magaiver Tech"
+                className="w-full h-[460px] object-cover object-center sm:h-[560px]"
+                loading="lazy"
+              />
               <div className="absolute inset-0 bg-gradient-to-tr from-ink/70 via-transparent to-transparent" />
               <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-amber/50 bg-ink/80 px-3 py-1.5 backdrop-blur">
                 <Sparkles className="h-3 w-3 text-amber" />
-                <span className="font-body text-[10px] font-medium uppercase tracking-[0.25em] text-amber">Equipamento exclusivo</span>
+                <span className="font-body text-[10px] font-medium uppercase tracking-[0.25em] text-amber">Uso real do equipamento</span>
               </div>
             </div>
           </motion.div>
@@ -778,18 +878,17 @@ function Farol() {
               <span className="font-body text-[11px] font-medium uppercase tracking-[0.3em] text-mute">Destaque · Regulagem de faróis</span>
             </div>
             <h2 className="mt-6 font-display text-4xl font-medium leading-[1.05] tracking-tight text-cream sm:text-5xl lg:text-6xl">
-              Uma máquina <span className="font-serif-it text-amber">quase única</span> no DF.
+              Regulagem de faróis com <span className="font-serif-it text-amber">verificação correta.</span>
             </h2>
             <p className="mt-6 max-w-xl font-body text-[15px] leading-relaxed text-cream/65">
-              Desenvolvida sob medida para a MagaiverTech, nossa máquina de regulagem de faróis garante
-              precisão milimétrica no ajuste do feixe de luz — mais segurança à noite, mais visibilidade na chuva
-              e zero ofuscamento para o motorista que vem na contramão.
+              A imagem mostra o atendimento real de regulagem de faróis com equipamento adequado. O ajuste correto do feixe de luz
+              melhora a visibilidade, aumenta a segurança e evita ofuscamento para quem vem no sentido contrário.
             </p>
             <ul className="mt-10 space-y-4">
               {[
-                "Aferição calibrada por padrão técnico",
-                "Ajuste de altura e angulação por feixe",
-                "Equipamento próprio, raro de encontrar na região",
+                "Verificação técnica do alinhamento dos faróis",
+                "Ajuste de altura e angulação do feixe",
+                "Mais segurança para dirigir à noite e na chuva",
               ].map((t, i) => (
                 <li key={t} className="flex items-center gap-4 border-b hairline pb-4">
                   <span className="font-display text-xs font-medium text-amber">{String(i + 1).padStart(2, "0")}</span>
@@ -971,6 +1070,7 @@ function Home() {
       <Navbar />
       <main>
         <Hero />
+        <Legacy />
         <Services />
         <Farol />
         <Diferenciais />
