@@ -9,6 +9,7 @@ import shop1 from "@/assets/shop-1.png";
 import shop2 from "@/assets/shop-2.png";
 import shop3 from "@/assets/shop-3.png";
 import shop4 from "@/assets/shop-4.png";
+import farolAsset from "@/assets/farol-machine.png";
 import logoAsset from "@/assets/client/auto-center-magaiver-tech-logo.png";
 import clientFacade from "@/assets/client/fachada-auto-center-magaiver-tech.webp";
 import clientClassicCar from "@/assets/client/cliente-carro-classico-magaiver-tech.webp";
@@ -856,17 +857,21 @@ function Farol() {
             viewport={{ once: true }} transition={{ duration: 0.8 }}
             className="col-span-12 lg:col-span-6 relative"
           >
-            <div className="relative overflow-hidden rounded-2xl border hairline">
+            <div className="relative overflow-hidden rounded-2xl border hairline bg-ink">
               <img
-                src={clientToyota}
-                alt="Carro branco em atendimento com equipamento de regulagem de faróis na Auto Center Magaiver Tech"
+                src={farolAsset}
+                alt="Máquina de regulagem de farol da Auto Center Magaiver Tech"
                 className="w-full h-[460px] object-cover object-center sm:h-[560px]"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-ink/70 via-transparent to-transparent" />
               <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-amber/50 bg-ink/80 px-3 py-1.5 backdrop-blur">
                 <Sparkles className="h-3 w-3 text-amber" />
-                <span className="font-body text-[10px] font-medium uppercase tracking-[0.25em] text-amber">Uso real do equipamento</span>
+                <span className="font-body text-[10px] font-medium uppercase tracking-[0.25em] text-amber">Equipamento de regulagem</span>
+              </div>
+              <div className="absolute bottom-5 left-5 right-5 max-w-sm">
+                <div className="font-display text-2xl font-medium text-cream">Máquina de regulagem de faróis</div>
+                <p className="mt-2 font-body text-[13px] leading-relaxed text-cream/65">Equipamento usado para verificar e ajustar o feixe de luz com precisão.</p>
               </div>
             </div>
           </motion.div>
@@ -881,9 +886,24 @@ function Farol() {
               Regulagem de faróis com <span className="font-serif-it text-amber">verificação correta.</span>
             </h2>
             <p className="mt-6 max-w-xl font-body text-[15px] leading-relaxed text-cream/65">
-              A imagem mostra o atendimento real de regulagem de faróis com equipamento adequado. O ajuste correto do feixe de luz
+              A máquina de regulagem é parte essencial do atendimento. A foto complementar mostra o equipamento sendo aplicado em um veículo real,
+              conectando a estrutura técnica ao serviço executado no dia a dia. O ajuste correto do feixe de luz
               melhora a visibilidade, aumenta a segurança e evita ofuscamento para quem vem no sentido contrário.
             </p>
+            <div className="mt-8 overflow-hidden rounded-2xl border hairline bg-ink">
+              <img
+                src={clientToyota}
+                alt="Carro branco em atendimento com equipamento de regulagem de faróis na Auto Center Magaiver Tech"
+                className="h-56 w-full object-cover object-center sm:h-72"
+                loading="lazy"
+              />
+              <div className="border-t hairline p-4">
+                <div className="font-body text-[11px] uppercase tracking-[0.24em] text-amber">Aplicação real</div>
+                <p className="mt-2 font-body text-[13px] leading-relaxed text-cream/65">
+                  Veículo em atendimento durante a verificação do alinhamento dos faróis.
+                </p>
+              </div>
+            </div>
             <ul className="mt-10 space-y-4">
               {[
                 "Verificação técnica do alinhamento dos faróis",
