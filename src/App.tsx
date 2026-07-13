@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { motion, useScroll, useSpring, useInView, animate, useTransform } from "framer-motion";
 import {
   Zap, Target, Scale, Lightbulb, Disc, ScanLine, Instagram, MapPin, Clock,
-  ArrowUpRight, ArrowRight, Plus, Wrench, Cog, Sparkles, Star, Play, X,
+  ArrowUpRight, ArrowRight, Plus, Wrench, Cog, Sparkles, Star, X,
 } from "lucide-react";
 import shop1 from "@/assets/shop-1.png";
 import shop2 from "@/assets/shop-2.png";
@@ -15,8 +15,11 @@ import clientFacade from "@/assets/client/fachada-auto-center-magaiver-tech.webp
 import clientClassicCar from "@/assets/client/cliente-carro-classico-magaiver-tech.webp";
 import clientToyota from "@/assets/client/servico-toyota-magaiver-tech.webp";
 import clientParts from "@/assets/client/pecas-eletricas-magaiver-tech.webp";
-import clientVideo from "@/assets/client/video-auto-center-magaiver-tech.mp4";
 import heroPurpose from "@/assets/client/hero-proposito-magaiver-tech.webp";
+import serviceAlignment from "@/assets/client/alinhamento-magaiver-tech.jpg";
+import serviceBalance from "@/assets/client/balanceamento-magaiver-tech.jpg";
+import insideVideo from "@/assets/client/magaiver-tech-em-acao.mp4";
+import insideVideoPoster from "@/assets/client/magaiver-tech-em-acao-poster.webp";
 
 const WHATSAPP = "5561981406061";
 const WA_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Olá MagaiverTech! Quero agendar um serviço.")}`;
@@ -364,6 +367,172 @@ function Services() {
             </div>
           </div>
         </div>
+        <div className="mt-20">
+          <div className="grid grid-cols-12 gap-6 lg:gap-10">
+            <div className="col-span-12 lg:col-span-4">
+              <div className="flex items-center gap-3">
+                <span className="font-display text-xs font-medium text-amber">02.1</span>
+                <div className="h-px w-8 bg-amber" />
+                <span className="font-body text-[11px] font-medium uppercase tracking-[0.3em] text-mute">Serviços na prática</span>
+              </div>
+            </div>
+            <div className="col-span-12 lg:col-span-8">
+              <h3 className="font-display text-4xl font-medium leading-tight text-cream sm:text-5xl">
+                Equipamento, experiência e <span className="font-serif-it text-amber">cuidado</span> em cada detalhe.
+              </h3>
+              <p className="mt-5 max-w-2xl font-body text-[15px] leading-relaxed text-cream/60">
+                As imagens mostram serviços reais realizados na oficina. Cada etapa é executada com atenção, equipamento adequado
+                e compromisso com a segurança do veículo.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-10 space-y-6">
+            <motion.article
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7 }}
+              className="grid grid-cols-12 overflow-hidden rounded-2xl border hairline bg-ink-soft/45"
+            >
+              <div className="order-2 col-span-12 lg:order-1 lg:col-span-6">
+                <img
+                  src={serviceAlignment}
+                  alt="Profissional realizando alinhamento computadorizado na Auto Center Magaiver Tech"
+                  className="h-80 w-full object-cover object-center sm:h-[520px] lg:h-full"
+                  loading="lazy"
+                />
+              </div>
+              <div className="order-1 col-span-12 flex flex-col justify-center p-8 lg:order-2 lg:col-span-6 lg:p-12">
+                <div className="font-body text-[11px] uppercase tracking-[0.28em] text-amber">Alinhamento computadorizado</div>
+                <h4 className="mt-5 font-display text-3xl font-medium leading-tight text-cream sm:text-4xl">
+                  Precisão para o carro seguir no caminho certo.
+                </h4>
+                <p className="mt-5 font-body text-[15px] leading-relaxed text-cream/65">
+                  O alinhamento correto ajuda a preservar os pneus, melhora a estabilidade e proporciona uma direção mais segura.
+                  Na Magaiver Tech, o serviço é realizado com equipamento adequado e verificação técnica de cada ajuste.
+                </p>
+                <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+                  {[
+                    "Correção dos ângulos das rodas",
+                    "Maior estabilidade na direção",
+                    "Redução do desgaste irregular dos pneus",
+                    "Verificação técnica com equipamento adequado",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3 font-body text-[13px] leading-relaxed text-cream/75">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.article>
+
+            <motion.article
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7 }}
+              className="grid grid-cols-12 overflow-hidden rounded-2xl border hairline bg-ink-soft/45"
+            >
+              <div className="col-span-12 flex flex-col justify-center p-8 lg:col-span-6 lg:p-12">
+                <div className="font-body text-[11px] uppercase tracking-[0.28em] text-amber">Balanceamento de rodas</div>
+                <h4 className="mt-5 font-display text-3xl font-medium leading-tight text-cream sm:text-4xl">
+                  Mais estabilidade, conforto e segurança ao dirigir.
+                </h4>
+                <p className="mt-5 font-body text-[15px] leading-relaxed text-cream/65">
+                  O balanceamento correto reduz vibrações no volante, melhora o conforto durante a condução e contribui para a
+                  conservação dos pneus e dos componentes da suspensão.
+                </p>
+                <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+                  {[
+                    "Redução de vibrações no volante",
+                    "Rodas equilibradas com precisão",
+                    "Maior conforto na condução",
+                    "Preservação dos pneus e da suspensão",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3 font-body text-[13px] leading-relaxed text-cream/75">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="col-span-12 lg:col-span-6">
+                <img
+                  src={serviceBalance}
+                  alt="Profissional realizando balanceamento de roda em veículo na Auto Center Magaiver Tech"
+                  className="h-80 w-full object-cover object-center sm:h-[520px] lg:h-full"
+                  loading="lazy"
+                />
+              </div>
+            </motion.article>
+
+            <motion.article
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7 }}
+              className="grid grid-cols-12 gap-8 overflow-hidden rounded-2xl border hairline bg-ink-soft/60 p-6 lg:gap-12 lg:p-10"
+            >
+              <div className="col-span-12 flex flex-col justify-center lg:col-span-7">
+                <div className="font-body text-[11px] uppercase tracking-[0.28em] text-amber">Por dentro da Magaiver Tech</div>
+                <h4 className="mt-5 max-w-2xl font-display text-3xl font-medium leading-tight text-cream sm:text-4xl">
+                  Trabalho sério, atendimento próximo e solução de verdade.
+                </h4>
+                <p className="mt-5 max-w-2xl font-body text-[15px] leading-relaxed text-cream/65">
+                  Por trás de cada diagnóstico e de cada serviço existe uma equipe presente, uma estrutura preparada e o compromisso
+                  de encontrar a solução certa para cada veículo.
+                </p>
+                <div className="mt-7 border-l-2 border-amber bg-amber/5 px-5 py-4">
+                  <p className="font-serif-it text-2xl leading-snug text-cream">
+                    Seu carro chega com uma necessidade. Nosso trabalho é fazer ele voltar para a rua com segurança e confiança.
+                  </p>
+                  <p className="mt-3 font-body text-[13px] leading-relaxed text-cream/62">
+                    Transformamos manutenção em confiança, atendimento em relacionamento.
+                  </p>
+                </div>
+                <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                  {[
+                    "Elétrica automotiva",
+                    "Mecânica geral",
+                    "Alinhamento",
+                    "Balanceamento",
+                    "Regulagem de faróis",
+                    "Sistema de freios",
+                  ].map((item) => (
+                    <div key={item} className="rounded-full border border-amber/20 bg-ink/45 px-4 py-2 font-body text-[12px] uppercase tracking-[0.16em] text-cream/75">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+                <a
+                  href={WA_URL}
+                  target="_blank"
+                  rel="noopener"
+                  className="mt-9 inline-flex w-fit items-center gap-3 rounded-full bg-amber px-7 py-3.5 font-display text-[13px] font-semibold text-ink transition hover:shadow-[0_20px_50px_-10px_rgba(245,180,0,0.6)]"
+                >
+                  Agendar uma avaliação
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
+              </div>
+              <div className="col-span-12 lg:col-span-5">
+                <div className="mx-auto max-w-[360px] overflow-hidden rounded-2xl border border-amber/20 bg-ink p-2 shadow-[0_30px_90px_rgba(0,0,0,0.35)]">
+                  <video
+                    className="aspect-[9/16] w-full rounded-xl bg-black object-contain"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    poster={insideVideoPoster}
+                    aria-label="Vídeo mostrando o responsável e a estrutura interna da Auto Center Magaiver Tech"
+                  >
+                    <source src={insideVideo} type="video/mp4" />
+                  </video>
+                </div>
+              </div>
+            </motion.article>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -567,35 +736,15 @@ function Oficina() {
           })}
         </div>
 
-        <div className="mt-4 grid grid-cols-12 gap-4">
-          <div className="col-span-12 overflow-hidden rounded-2xl border hairline bg-ink lg:col-span-7">
-            <div className="relative">
-              <video
-                className="aspect-video w-full bg-black object-contain"
-                controls
-                playsInline
-                preload="metadata"
-                poster={clientFacade}
-                aria-label="Vídeo da Auto Center Magaiver Tech"
-              >
-                <source src={clientVideo} type="video/mp4" />
-              </video>
-              <div className="pointer-events-none absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-amber/40 bg-ink/75 px-3 py-1.5 backdrop-blur">
-                <Play className="h-3.5 w-3.5 fill-amber text-amber" />
-                <span className="font-body text-[10px] uppercase tracking-[0.25em] text-amber">Vídeo do cliente</span>
-              </div>
-            </div>
-          </div>
-          <div className="col-span-12 flex flex-col justify-between rounded-2xl border hairline bg-ink/70 p-6 lg:col-span-5 lg:p-8">
-            <div>
-              <div className="font-body text-[11px] uppercase tracking-[0.28em] text-amber">Mídias reais</div>
-              <h3 className="mt-4 font-display text-3xl font-medium leading-tight text-cream">Bastidores da oficina em funcionamento.</h3>
-            </div>
-            <p className="mt-6 font-body text-[14px] leading-relaxed text-cream/60">
-              O vídeo e as imagens complementam as seções principais: fachada, rotina de atendimento e estrutura real da Auto Center Magaiver Tech.
-              O player não inicia automaticamente e mantém controles visíveis.
-            </p>
-          </div>
+        <div className="mt-4 rounded-2xl border hairline bg-ink/55 p-6 lg:p-8">
+          <div className="font-body text-[11px] uppercase tracking-[0.28em] text-amber">Mídias reais</div>
+          <h3 className="mt-3 max-w-3xl font-display text-2xl font-medium leading-tight text-cream sm:text-3xl">
+            Fachada, estrutura e ambiente de trabalho como apoio aos serviços apresentados acima.
+          </h3>
+          <p className="mt-4 max-w-3xl font-body text-[14px] leading-relaxed text-cream/60">
+            A galeria geral fica reservada aos bastidores da oficina. As mídias técnicas de alinhamento, balanceamento,
+            elétrica e regulagem de faróis aparecem nas seções específicas de cada serviço.
+          </p>
         </div>
       </div>
       {activeImage && <MediaLightbox item={activeImage} onClose={() => setActiveImage(null)} />}
