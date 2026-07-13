@@ -16,6 +16,7 @@ import clientClassicCar from "@/assets/client/cliente-carro-classico-magaiver-te
 import clientToyota from "@/assets/client/servico-toyota-magaiver-tech.webp";
 import clientParts from "@/assets/client/pecas-eletricas-magaiver-tech.webp";
 import clientVideo from "@/assets/client/video-auto-center-magaiver-tech.mp4";
+import heroPurpose from "@/assets/client/hero-proposito-magaiver-tech.webp";
 
 const WHATSAPP = "5561981406061";
 const WA_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Olá MagaiverTech! Quero agendar um serviço.")}`;
@@ -110,81 +111,80 @@ function Hero() {
       <div className="absolute left-6 top-0 hidden h-full border-l hairline lg:block lg:left-10" />
       <div className="absolute right-6 top-0 hidden h-full border-r hairline lg:block lg:right-10" />
 
-      <div className="relative mx-auto grid min-h-screen max-w-[1400px] grid-cols-12 gap-6 px-6 pt-32 pb-16 lg:px-10 lg:pt-40">
-        {/* Left column: kicker + title */}
-        <div className="col-span-12 lg:col-span-8">
+      <div className="relative mx-auto grid min-h-screen max-w-[1400px] grid-cols-12 items-center gap-8 px-6 pt-32 pb-16 lg:px-10 lg:pt-36">
+        <div className="col-span-12 lg:col-span-7">
           <motion.div
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            className="mb-10 flex items-center gap-3"
+            className="mb-8 flex items-center gap-3"
           >
             <div className="h-px w-8 bg-amber" />
-            <span className="font-body text-[11px] font-medium uppercase tracking-[0.32em] text-amber">Ceilândia · DF · Desde 1984</span>
+            <span className="font-body text-[11px] font-medium uppercase tracking-[0.32em] text-amber">Fé, propósito e dedicação</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display text-[44px] font-medium leading-[0.95] tracking-[-0.03em] text-cream sm:text-[68px] lg:text-[104px]"
+            className="max-w-4xl font-display text-[42px] font-medium leading-[0.98] tracking-[-0.03em] text-cream sm:text-[64px] lg:text-[82px]"
           >
-            Tecnologia
-            <br />
-            <span className="font-serif-it text-amber">que move</span>
-            <br />
-            <span className="text-mute">seu carro.</span>
+            Um sonho guiado por Deus, construído com trabalho e propósito.
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
-            className="mt-10 max-w-xl font-body text-[15px] leading-relaxed text-cream/65 sm:text-base"
+            className="mt-8 max-w-2xl font-body text-[15px] leading-relaxed text-cream/68 sm:text-base"
           >
-            Auto Center completo em Ceilândia – DF. Elétrica, mecânica, alinhamento, balanceamento, freios,
-            suspensão e regulagem de faróis. Mais de quatro décadas decifrando o que outros desistem.
+            A Magaiver Tech nasceu de um sonho que, com fé em Deus, dedicação e muito trabalho, transformou-se em um projeto de vida.
+            Todos os dias, seguimos esse propósito oferecendo soluções automotivas com responsabilidade, transparência e respeito por cada cliente.
           </motion.p>
 
           <motion.div
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.42 }}
+            className="mt-8 max-w-2xl border-l-2 border-amber bg-amber/5 px-5 py-4"
+          >
+            <p className="font-serif-it text-2xl leading-snug text-cream sm:text-3xl">
+              Transformamos manutenção em <span className="text-amber">confiança</span>, atendimento em relacionamento.
+            </p>
+          </motion.div>
+
+          <motion.div
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-12 flex flex-wrap items-center gap-4"
+            className="mt-10 flex flex-wrap items-center gap-4"
           >
             <a
               href={WA_URL} target="_blank" rel="noopener"
               className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-amber px-7 py-4 font-display text-[13px] font-semibold text-ink transition hover:shadow-[0_20px_60px_-10px_rgba(245,180,0,0.5)]"
             >
-              <span className="relative z-10">Falar no WhatsApp</span>
+              <span className="relative z-10">Agendar atendimento</span>
               <ArrowUpRight className="relative z-10 h-4 w-4 transition group-hover:rotate-45" />
             </a>
             <a
               href="#servicos"
               className="group inline-flex items-center gap-3 rounded-full border hairline px-7 py-4 font-display text-[13px] font-medium text-cream/85 transition hover:border-cream/40 hover:text-cream"
             >
-              Ver serviços
+              Conheça nossos serviços
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
             </a>
           </motion.div>
         </div>
 
-        {/* Right column: stats card */}
         <motion.div
           initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9, delay: 0.4 }}
-          className="col-span-12 lg:col-span-4 lg:pt-6"
+          className="col-span-12 lg:col-span-5"
         >
-          <div className="relative h-full">
-            <div className="relative overflow-hidden rounded-2xl border hairline bg-ink-soft/60 backdrop-blur">
-              <img src={shop4} alt="Veículo no elevador" className="h-72 w-full object-cover opacity-75 sm:h-96" />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" />
-              <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-amber/40 bg-ink/70 px-3 py-1 backdrop-blur">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber animate-glow-soft" />
-                <span className="font-body text-[10px] font-medium uppercase tracking-[0.25em] text-amber">Em operação</span>
-              </div>
-              <div className="absolute inset-x-5 bottom-5">
-                <div className="flex items-end justify-between">
-                  <div>
-                    <div className="font-display text-[64px] font-medium leading-none tracking-tight text-cream">40<span className="text-amber">+</span></div>
-                    <div className="mt-1 font-body text-[11px] uppercase tracking-[0.25em] text-mute">anos resolvendo</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-display text-2xl font-medium text-cream">5k+</div>
-                    <div className="font-body text-[10px] uppercase tracking-[0.2em] text-mute">carros</div>
-                  </div>
-                </div>
+          <div className="relative mx-auto max-w-[460px] lg:ml-auto">
+            <div className="absolute -inset-4 rounded-[2rem] bg-amber/10 blur-2xl" />
+            <div className="relative overflow-hidden rounded-2xl border border-amber/20 bg-ink-soft/70 p-2 shadow-[0_30px_120px_rgba(0,0,0,0.45)] backdrop-blur">
+              <img
+                src={heroPurpose}
+                alt="Fundador da Auto Center Magaiver Tech ao lado de veículo clássico dentro da oficina"
+                className="aspect-[9/16] w-full rounded-xl object-cover object-[50%_48%]"
+                loading="eager"
+              />
+              <div className="pointer-events-none absolute inset-2 rounded-xl bg-gradient-to-t from-ink/35 via-transparent to-ink/10" />
+              <div className="absolute bottom-6 left-6 right-6 rounded-xl border border-amber/25 bg-ink/78 p-4 backdrop-blur">
+                <div className="font-body text-[10px] uppercase tracking-[0.26em] text-amber">Projeto de vida</div>
+                <p className="mt-2 font-body text-[13px] leading-relaxed text-cream/75">
+                  Fé, trabalho e atendimento próximo dentro da oficina Magaiver Tech.
+                </p>
               </div>
             </div>
           </div>
