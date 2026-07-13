@@ -1043,7 +1043,7 @@ function Farol() {
               <img
                 src={clientToyota}
                 alt="Carro branco em atendimento com equipamento de regulagem de faróis na Auto Center Magaiver Tech"
-                className="h-56 w-full object-cover object-center sm:h-72"
+                className="max-h-[420px] w-full bg-black object-contain"
                 loading="lazy"
               />
               <div className="border-t hairline p-4">
