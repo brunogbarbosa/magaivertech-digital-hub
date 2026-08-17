@@ -12,12 +12,16 @@ import shop4 from "@/assets/shop-4.png";
 import farolAsset from "@/assets/farol-machine.png";
 import logoAsset from "@/assets/client/auto-center-magaiver-tech-logo.png";
 import clientFacade from "@/assets/client/fachada-auto-center-magaiver-tech.webp";
-import clientClassicCar from "@/assets/client/cliente-carro-classico-magaiver-tech.webp";
 import clientToyota from "@/assets/client/servico-toyota-magaiver-tech.webp";
 import clientParts from "@/assets/client/pecas-eletricas-magaiver-tech.webp";
 import heroPurpose from "@/assets/client/hero-proposito-magaiver-tech.webp";
-import serviceAlignment from "@/assets/client/alinhamento-magaiver-tech.jpg";
-import serviceBalance from "@/assets/client/balanceamento-magaiver-tech.jpg";
+import serviceAlignment from "@/assets/client/alinhamento-roda-magaiver-tech.webp";
+import serviceBalance from "@/assets/client/balanceamento-oficina-real-magaiver-tech.webp";
+import alignmentBay from "@/assets/client/area-alinhamento-magaiver-tech.webp";
+import partsStock from "@/assets/client/estoque-pecas-magaiver-tech.webp";
+import mechanicFacade from "@/assets/client/fachada-mecanica-magaiver-tech.webp";
+import electricFacade from "@/assets/client/fachada-eletrica-magaiver-tech.webp";
+import firstShop from "@/assets/client/primeira-loja-magaiver-tech.webp";
 import insideVideo from "@/assets/client/magaiver-tech-em-acao.mp4";
 import insideVideoPoster from "@/assets/client/magaiver-tech-em-acao-poster.webp";
 
@@ -29,10 +33,14 @@ const GOOGLE_MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${MAP_Q
 const GOOGLE_MAPS_EMBED_URL = `https://www.google.com/maps?q=${MAP_QUERY}&output=embed`;
 
 const clientGallery = [
-  { src: clientFacade, alt: "Fachada da Auto Center Magaiver Tech em Ceilândia", span: "lg:col-span-7 lg:row-span-2", imageClass: "h-full min-h-[360px] max-h-[640px]" },
-  { src: shop4, alt: "Veículo em atendimento no elevador da oficina", span: "sm:col-span-6 lg:col-span-5", imageClass: "h-72 sm:h-80" },
-  { src: shop2, alt: "Equipamento técnico de regulagem e diagnóstico na oficina", span: "sm:col-span-3 lg:col-span-3", imageClass: "h-56 sm:h-64" },
-  { src: shop3, alt: "Interior da oficina Auto Center Magaiver Tech", span: "sm:col-span-3 lg:col-span-2", imageClass: "h-56 sm:h-64" },
+  { src: mechanicFacade, alt: "Fachada da unidade de mecânica da Auto Center Magaiver Tech", label: "Fachada · Mecânica", span: "lg:col-span-7 lg:row-span-2", imageClass: "h-full min-h-[360px] max-h-[660px]" },
+  { src: electricFacade, alt: "Fachada da unidade de elétrica da Auto Center Magaiver Tech", label: "Fachada · Elétrica", span: "sm:col-span-6 lg:col-span-5", imageClass: "h-72 sm:h-80" },
+  { src: alignmentBay, alt: "Área e equipamento de alinhamento da Auto Center Magaiver Tech", label: "Estrutura · Alinhamento", span: "sm:col-span-6 lg:col-span-5", imageClass: "h-72 sm:h-80" },
+  { src: partsStock, alt: "Estoque de peças, filtros, lâmpadas e lubrificantes da Auto Center Magaiver Tech", label: "Peças e componentes", span: "sm:col-span-6 lg:col-span-4", imageClass: "h-64 sm:h-72" },
+  { src: clientFacade, alt: "Vista das duas unidades da Auto Center Magaiver Tech em Ceilândia", label: "Nossa estrutura", span: "sm:col-span-6 lg:col-span-4", imageClass: "h-64 sm:h-72" },
+  { src: shop4, alt: "Veículo em atendimento no elevador da oficina", label: "Atendimento real", span: "sm:col-span-6 lg:col-span-4", imageClass: "h-64 sm:h-72" },
+  { src: shop2, alt: "Equipamento técnico de regulagem e diagnóstico na oficina", label: "Equipamento técnico", span: "sm:col-span-6 lg:col-span-6", imageClass: "h-64 sm:h-72" },
+  { src: shop3, alt: "Interior da oficina Auto Center Magaiver Tech", label: "Bastidores da oficina", span: "sm:col-span-6 lg:col-span-6", imageClass: "h-64 sm:h-72" },
 ];
 
 /* ─────────── SCROLL PROGRESS ─────────── */
@@ -215,57 +223,80 @@ function Legacy() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(245,180,0,0.12),transparent_55%)]" />
       <div className="grain" />
       <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10">
-        <div className="grid grid-cols-12 items-center gap-8 lg:gap-14">
+        <div className="mb-10 grid grid-cols-12 gap-8 lg:mb-14 lg:gap-14">
+          <div className="col-span-12 lg:col-span-4">
+            <div className="flex items-center gap-3">
+              <span className="font-display text-xs font-medium text-amber">01</span>
+              <div className="h-px w-8 bg-amber" />
+              <span className="font-body text-[11px] font-medium uppercase tracking-[0.3em] text-mute">Arquivo histórico</span>
+            </div>
+          </div>
+          <div className="col-span-12 lg:col-span-8">
+            <h2 className="max-w-3xl font-display text-4xl font-medium leading-[1.05] tracking-tight text-cream sm:text-5xl lg:text-6xl">
+              Foi aqui que <span className="font-serif-it text-amber">tudo começou.</span>
+            </h2>
+            <p className="mt-5 max-w-2xl font-body text-base leading-relaxed text-cream/60">
+              Uma imagem das nossas raízes, quando experiência, trabalho e confiança começaram a formar a história da Magaiver Tech.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-12 items-stretch gap-6 lg:gap-10">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7 }}
-            className="col-span-12 lg:col-span-5"
+            transition={{ duration: 0.8 }}
+            className="col-span-12 lg:col-span-8"
           >
-            <div className="relative overflow-hidden rounded-2xl border hairline bg-ink">
+            <div className="relative h-full min-h-[390px] overflow-hidden rounded-2xl border border-amber/20 bg-ink p-2 sm:min-h-[520px]">
               <img
-                src={clientClassicCar}
-                alt="Pai do cliente ao lado de um carro antigo, símbolo do legado da Auto Center Magaiver Tech"
-                className="h-[360px] w-full object-cover object-center sm:h-[460px] lg:h-[560px]"
+                src={firstShop}
+                alt="Registro histórico da primeira loja, onde começou a trajetória da Magaiver Tech"
+                className="h-full w-full rounded-xl object-cover object-center"
                 loading="eager"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />
-              <div className="absolute bottom-5 left-5 right-5">
-                <div className="font-body text-[11px] uppercase tracking-[0.26em] text-amber">Uma história de família</div>
-                <div className="mt-2 font-display text-2xl font-medium text-cream">O começo de tudo</div>
+              <div className="pointer-events-none absolute inset-2 rounded-xl bg-gradient-to-t from-ink/75 via-transparent to-ink/10" />
+              <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-amber/40 bg-ink/80 px-3 py-1.5 backdrop-blur sm:left-7 sm:top-7">
+                <span className="h-1.5 w-1.5 rounded-full bg-amber" />
+                <span className="font-body text-[10px] font-medium uppercase tracking-[0.25em] text-amber">O início de tudo</span>
+              </div>
+              <div className="absolute bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-8">
+                <div className="font-serif-it text-3xl leading-tight text-cream sm:text-4xl">Uma pequena loja. Um grande propósito.</div>
+                <p className="mt-2 max-w-xl font-body text-[13px] leading-relaxed text-cream/70">
+                  O primeiro capítulo de uma trajetória construída todos os dias, serviço por serviço.
+                </p>
               </div>
             </div>
           </motion.div>
 
-          <div className="col-span-12 lg:col-span-7">
-            <div className="flex items-center gap-3">
-              <span className="font-display text-xs font-medium text-amber">02</span>
-              <div className="h-px w-8 bg-amber" />
-              <span className="font-body text-[11px] font-medium uppercase tracking-[0.3em] text-mute">Nosso legado</span>
-            </div>
-            <h2 className="mt-6 max-w-3xl font-display text-4xl font-medium leading-[1.05] tracking-tight text-cream sm:text-5xl lg:text-6xl">
-              Uma base ensinada <span className="font-serif-it text-amber">desde criança.</span>
-            </h2>
-            <div className="mt-8 grid gap-6 font-body text-[15px] leading-relaxed text-cream/70 sm:grid-cols-2">
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="col-span-12 flex flex-col justify-between rounded-2xl border hairline bg-ink/65 p-7 lg:col-span-4 lg:p-9"
+          >
+            <div>
+              <div className="font-body text-[11px] uppercase tracking-[0.26em] text-amber">Raízes que permanecem</div>
+              <div className="mt-7 space-y-6 font-body text-[15px] leading-relaxed text-cream/70">
               <p>
-                A Auto Center Magaiver Tech carrega uma história construída com dedicação, experiência e ensinamentos passados de geração em geração.
-                Grande parte dessa trajetória começou com o pai, que desde cedo transmitiu conhecimento, valores e amor pelo trabalho automotivo.
+                  Antes das duas unidades e dos equipamentos atuais, havia a disposição de aprender, trabalhar e encontrar uma solução para cada cliente.
               </p>
               <p>
-                Hoje, a empresa segue esse legado com orgulho, unindo tradição, confiança e excelência no atendimento. Cada diagnóstico e cada reparo
-                carregam essa base: fazer bem feito, com respeito pela história e pelo cliente.
+                  A estrutura cresceu e a tecnologia evoluiu, mas a essência continua a mesma: fazer bem feito, com transparência, respeito e responsabilidade.
               </p>
+              </div>
             </div>
-            <div className="mt-10 grid gap-px border hairline bg-line/30 sm:grid-cols-3">
-              {["Tradição", "Confiança", "Excelência"].map((item) => (
-                <div key={item} className="bg-ink/70 p-5">
-                  <div className="font-display text-lg font-medium text-amber">{item}</div>
-                  <div className="mt-2 font-body text-[12px] uppercase tracking-[0.18em] text-mute">legado em cada serviço</div>
+            <div className="mt-10 grid gap-px border hairline bg-line/30">
+              {["Trabalho", "Confiança", "Evolução"].map((item, index) => (
+                <div key={item} className="flex items-center justify-between bg-ink/75 px-5 py-4">
+                  <div className="font-display text-lg font-medium text-cream">{item}</div>
+                  <div className="font-display text-xs text-amber">0{index + 1}</div>
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -398,7 +429,7 @@ function Services() {
               <div className="order-2 col-span-12 lg:order-1 lg:col-span-6">
                 <img
                   src={serviceAlignment}
-                  alt="Profissional realizando alinhamento computadorizado na Auto Center Magaiver Tech"
+                  alt="Sensor de alinhamento instalado na roda de um veículo na Auto Center Magaiver Tech"
                   className="h-80 w-full object-cover object-center sm:h-[520px] lg:h-full"
                   loading="lazy"
                 />
@@ -461,8 +492,8 @@ function Services() {
               <div className="col-span-12 lg:col-span-6">
                 <img
                   src={serviceBalance}
-                  alt="Profissional realizando balanceamento de roda em veículo na Auto Center Magaiver Tech"
-                  className="h-80 w-full object-cover object-center sm:h-[520px] lg:h-full"
+                  alt="Profissional operando o equipamento de balanceamento na Auto Center Magaiver Tech"
+                  className="h-80 w-full object-cover object-[50%_58%] sm:h-[520px] lg:h-full"
                   loading="lazy"
                 />
               </div>
@@ -695,7 +726,7 @@ function Oficina() {
           num="05"
           kicker="Bastidores reais"
           title={<>A estrutura por trás de cada <span className="font-serif-it text-amber">serviço entregue.</span></>}
-          sub="Depois dos destaques de história, elétrica e faróis, esta área reúne fachada, rotina e ambiente real da oficina para mostrar onde o atendimento acontece."
+          sub="As duas fachadas, a área de alinhamento, o estoque e a rotina real da oficina reunidos em um só lugar."
         />
         <div className="grid grid-cols-12 gap-4">
           {clientGallery.map((item, index) => {
@@ -713,9 +744,11 @@ function Oficina() {
                     loading={index === 0 ? "eager" : "lazy"}
                   />
                   <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/65 via-transparent to-transparent opacity-70" />
-                  <span className="pointer-events-none absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-cream/20 bg-ink/70 px-3 py-1.5 font-body text-[10px] uppercase tracking-[0.22em] text-cream/80 backdrop-blur">
-                    Ampliar
-                    <ArrowUpRight className="h-3 w-3 text-amber" />
+                  <span className="pointer-events-none absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
+                    <span className="font-display text-lg font-medium text-cream drop-shadow sm:text-xl">{item.label}</span>
+                    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-cream/20 bg-ink/70 text-amber backdrop-blur">
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </span>
                   </span>
                 </button>
             );
@@ -739,11 +772,11 @@ function Oficina() {
         <div className="mt-4 rounded-2xl border hairline bg-ink/55 p-6 lg:p-8">
           <div className="font-body text-[11px] uppercase tracking-[0.28em] text-amber">Mídias reais</div>
           <h3 className="mt-3 max-w-3xl font-display text-2xl font-medium leading-tight text-cream sm:text-3xl">
-            Fachada, estrutura e ambiente de trabalho como apoio aos serviços apresentados acima.
+            Duas unidades, uma só equipe e a mesma dedicação em cada atendimento.
           </h3>
           <p className="mt-4 max-w-3xl font-body text-[14px] leading-relaxed text-cream/60">
-            A galeria geral fica reservada aos bastidores da oficina. As mídias técnicas de alinhamento, balanceamento,
-            elétrica e regulagem de faróis aparecem nas seções específicas de cada serviço.
+            Aqui você conhece a unidade de mecânica, a unidade de elétrica, os equipamentos e os bastidores que sustentam
+            os serviços apresentados ao longo do site. Toque em qualquer imagem para ampliar.
           </p>
         </div>
       </div>
