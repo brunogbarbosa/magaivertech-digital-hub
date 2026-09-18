@@ -123,28 +123,29 @@ function Hero() {
       <div className="absolute right-6 top-0 hidden h-full border-r hairline lg:block lg:right-10" />
 
       <div className="relative mx-auto grid min-h-screen max-w-[1400px] grid-cols-12 items-center gap-8 px-6 pt-32 pb-16 lg:px-10 lg:pt-36">
-        <div className="col-span-12 lg:col-span-7">
+        <div className="col-span-12 lg:col-span-6">
           <motion.div
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
             className="mb-8 flex items-center gap-3"
           >
             <div className="h-px w-8 bg-amber" />
-            <span className="font-body text-[11px] font-medium uppercase tracking-[0.32em] text-amber">Fé, propósito e dedicação</span>
+            <span className="font-body text-[11px] font-medium uppercase tracking-[0.32em] text-amber">Nossas raízes · Magaiver Tech</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-4xl font-display text-[42px] font-medium leading-[0.98] tracking-[-0.03em] text-cream sm:text-[64px] lg:text-[82px]"
           >
-            Um sonho guiado por Deus, construído com trabalho e propósito.
+            Foi aqui que <span className="font-serif-it text-amber">tudo começou.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
             className="mt-8 max-w-2xl font-body text-[15px] leading-relaxed text-cream/68 sm:text-base"
           >
-            A Magaiver Tech nasceu de um sonho que, com fé em Deus, dedicação e muito trabalho, transformou-se em um projeto de vida.
-            Todos os dias, seguimos esse propósito oferecendo soluções automotivas com responsabilidade, transparência e respeito por cada cliente.
+            Antes das duas unidades e dos equipamentos atuais, havia uma pequena loja e a disposição de aprender, trabalhar
+            e encontrar uma solução para cada cliente. Dessa base nasceu a Magaiver Tech: uma história de dedicação que
+            continua em cada serviço, com responsabilidade, transparência e respeito.
           </motion.p>
 
           <motion.div
@@ -179,22 +180,22 @@ function Hero() {
 
         <motion.div
           initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9, delay: 0.4 }}
-          className="col-span-12 lg:col-span-5"
+          className="col-span-12 lg:col-span-6"
         >
-          <div className="relative mx-auto max-w-[460px] lg:ml-auto">
+          <div className="relative mx-auto max-w-[640px] lg:ml-auto">
             <div className="absolute -inset-4 rounded-[2rem] bg-amber/10 blur-2xl" />
             <div className="relative overflow-hidden rounded-2xl border border-amber/20 bg-ink-soft/70 p-2 shadow-[0_30px_120px_rgba(0,0,0,0.45)] backdrop-blur">
               <img
-                src={heroPurpose}
-                alt="Fundador da Auto Center Magaiver Tech ao lado de veículo clássico dentro da oficina"
-                className="aspect-[9/16] w-full rounded-xl object-cover object-[50%_48%]"
+                src={firstShop}
+                alt="Registro histórico da primeira loja, onde começou a trajetória da Magaiver Tech"
+                className="aspect-[3837/2503] w-full rounded-xl object-contain"
                 loading="eager"
+                fetchPriority="high"
               />
-              <div className="pointer-events-none absolute inset-2 rounded-xl bg-gradient-to-t from-ink/35 via-transparent to-ink/10" />
-              <div className="absolute bottom-6 left-6 right-6 rounded-xl border border-amber/25 bg-ink/78 p-4 backdrop-blur">
-                <div className="font-body text-[10px] uppercase tracking-[0.26em] text-amber">Projeto de vida</div>
-                <p className="mt-2 font-body text-[13px] leading-relaxed text-cream/75">
-                  Fé, trabalho e atendimento próximo dentro da oficina Magaiver Tech.
+              <div className="border-t border-amber/20 px-4 py-5 sm:px-5">
+                <div className="font-body text-[10px] uppercase tracking-[0.26em] text-amber">Arquivo histórico · O início de tudo</div>
+                <p className="mt-3 font-serif-it text-2xl leading-snug text-cream sm:text-3xl">
+                  Uma pequena loja. Um grande propósito.
                 </p>
               </div>
             </div>
@@ -206,8 +207,8 @@ function Hero() {
           <div className="font-body text-[12px] tracking-[0.18em] text-mute uppercase">
             <span className="text-cream">01</span> / 09 — Auto Center completo
           </div>
-          <a href="#servicos" className="group inline-flex items-center gap-2 font-body text-xs uppercase tracking-[0.25em] text-cream/60 hover:text-amber">
-            Role para explorar
+          <a href="#legado" className="group inline-flex items-center gap-2 font-body text-xs uppercase tracking-[0.25em] text-cream/60 hover:text-amber">
+            Conheça essa trajetória
             <span className="inline-block h-px w-10 bg-current transition-all group-hover:w-16" />
           </a>
         </div>
@@ -228,43 +229,43 @@ function Legacy() {
             <div className="flex items-center gap-3">
               <span className="font-display text-xs font-medium text-amber">01</span>
               <div className="h-px w-8 bg-amber" />
-              <span className="font-body text-[11px] font-medium uppercase tracking-[0.3em] text-mute">Arquivo histórico</span>
+              <span className="font-body text-[11px] font-medium uppercase tracking-[0.3em] text-mute">Fé, propósito e dedicação</span>
             </div>
           </div>
           <div className="col-span-12 lg:col-span-8">
             <h2 className="max-w-3xl font-display text-4xl font-medium leading-[1.05] tracking-tight text-cream sm:text-5xl lg:text-6xl">
-              Foi aqui que <span className="font-serif-it text-amber">tudo começou.</span>
+              Um sonho guiado por Deus, construído com <span className="font-serif-it text-amber">trabalho e propósito.</span>
             </h2>
             <p className="mt-5 max-w-2xl font-body text-base leading-relaxed text-cream/60">
-              Uma imagem das nossas raízes, quando experiência, trabalho e confiança começaram a formar a história da Magaiver Tech.
+              Das nossas raízes a um projeto de vida: a fé e a dedicação que dão continuidade à história da Magaiver Tech.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-12 items-stretch gap-6 lg:gap-10">
+        <div className="grid grid-cols-12 items-center gap-8 lg:gap-14">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8 }}
-            className="col-span-12 lg:col-span-8"
+            className="col-span-12 lg:col-span-5"
           >
-            <div className="relative h-full min-h-[390px] overflow-hidden rounded-2xl border border-amber/20 bg-ink p-2 sm:min-h-[520px]">
+            <div className="relative mx-auto max-w-[420px] overflow-hidden rounded-2xl border border-amber/20 bg-ink p-2 shadow-[0_30px_90px_rgba(0,0,0,0.35)]">
               <img
-                src={firstShop}
-                alt="Registro histórico da primeira loja, onde começou a trajetória da Magaiver Tech"
-                className="h-full w-full rounded-xl object-cover object-center"
-                loading="eager"
+                src={heroPurpose}
+                alt="Fundador da Auto Center Magaiver Tech ao lado de veículo clássico dentro da oficina"
+                className="aspect-[9/16] w-full rounded-xl object-cover object-[50%_48%]"
+                loading="lazy"
               />
               <div className="pointer-events-none absolute inset-2 rounded-xl bg-gradient-to-t from-ink/75 via-transparent to-ink/10" />
               <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-amber/40 bg-ink/80 px-3 py-1.5 backdrop-blur sm:left-7 sm:top-7">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber" />
-                <span className="font-body text-[10px] font-medium uppercase tracking-[0.25em] text-amber">O início de tudo</span>
+                <span className="font-body text-[10px] font-medium uppercase tracking-[0.25em] text-amber">Projeto de vida</span>
               </div>
               <div className="absolute bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-8">
-                <div className="font-serif-it text-3xl leading-tight text-cream sm:text-4xl">Uma pequena loja. Um grande propósito.</div>
+                <div className="font-serif-it text-3xl leading-tight text-cream sm:text-4xl">O legado continua.</div>
                 <p className="mt-2 max-w-xl font-body text-[13px] leading-relaxed text-cream/70">
-                  O primeiro capítulo de uma trajetória construída todos os dias, serviço por serviço.
+                  Fé, trabalho e atendimento próximo dentro da oficina Magaiver Tech.
                 </p>
               </div>
             </div>
@@ -275,21 +276,24 @@ function Legacy() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="col-span-12 flex flex-col justify-between rounded-2xl border hairline bg-ink/65 p-7 lg:col-span-4 lg:p-9"
+            className="col-span-12 rounded-2xl border hairline bg-ink/65 p-7 lg:col-span-7 lg:p-10"
           >
             <div>
-              <div className="font-body text-[11px] uppercase tracking-[0.26em] text-amber">Raízes que permanecem</div>
+              <div className="font-body text-[11px] uppercase tracking-[0.26em] text-amber">Um sonho que se tornou projeto de vida</div>
               <div className="mt-7 space-y-6 font-body text-[15px] leading-relaxed text-cream/70">
-              <p>
-                  Antes das duas unidades e dos equipamentos atuais, havia a disposição de aprender, trabalhar e encontrar uma solução para cada cliente.
-              </p>
-              <p>
-                  A estrutura cresceu e a tecnologia evoluiu, mas a essência continua a mesma: fazer bem feito, com transparência, respeito e responsabilidade.
-              </p>
+                <p>
+                  A Magaiver Tech nasceu de um sonho que, com fé em Deus, dedicação e muito trabalho, transformou-se em um projeto de vida.
+                  Os ensinamentos e a experiência que marcaram o começo continuam presentes na maneira de cuidar de cada veículo.
+                </p>
+                <p>
+                  A estrutura cresceu e a tecnologia evoluiu, mas a essência continua a mesma: fazer bem feito, com transparência,
+                  respeito e responsabilidade. Todos os dias, seguimos esse propósito oferecendo soluções automotivas e construindo
+                  relações de confiança com quem chega à oficina.
+                </p>
               </div>
             </div>
             <div className="mt-10 grid gap-px border hairline bg-line/30">
-              {["Trabalho", "Confiança", "Evolução"].map((item, index) => (
+              {["Fé", "Dedicação", "Confiança"].map((item, index) => (
                 <div key={item} className="flex items-center justify-between bg-ink/75 px-5 py-4">
                   <div className="font-display text-lg font-medium text-cream">{item}</div>
                   <div className="font-display text-xs text-amber">0{index + 1}</div>
