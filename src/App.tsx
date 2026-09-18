@@ -12,6 +12,7 @@ import shop4 from "@/assets/shop-4.png";
 import farolAsset from "@/assets/farol-machine.png";
 import logoAsset from "@/assets/client/auto-center-magaiver-tech-logo.png";
 import clientFacade from "@/assets/client/fachada-auto-center-magaiver-tech.webp";
+import clientClassicCar from "@/assets/client/cliente-carro-classico-magaiver-tech.webp";
 import clientToyota from "@/assets/client/servico-toyota-magaiver-tech.webp";
 import clientParts from "@/assets/client/pecas-eletricas-magaiver-tech.webp";
 import heroPurpose from "@/assets/client/hero-proposito-magaiver-tech.webp";
@@ -217,10 +218,10 @@ function Hero() {
   );
 }
 
-/* ─────────── LEGADO ─────────── */
-function Legacy() {
+/* ─────────── PROPÓSITO ─────────── */
+function Purpose() {
   return (
-    <section id="legado" className="relative overflow-hidden border-y hairline bg-ink-soft py-24 lg:py-32">
+    <section id="proposito" className="relative overflow-hidden border-y hairline bg-ink-soft py-24 lg:py-32">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(245,180,0,0.12),transparent_55%)]" />
       <div className="grain" />
       <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10">
@@ -301,6 +302,69 @@ function Legacy() {
               ))}
             </div>
           </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────── LEGADO DO PAI ─────────── */
+function Legacy() {
+  return (
+    <section id="legado" className="relative overflow-hidden border-y hairline bg-ink-soft py-24 lg:py-32">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(245,180,0,0.12),transparent_55%)]" />
+      <div className="grain" />
+      <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10">
+        <div className="grid grid-cols-12 items-center gap-8 lg:gap-14">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7 }}
+            className="col-span-12 lg:col-span-5"
+          >
+            <div className="relative overflow-hidden rounded-2xl border hairline bg-ink">
+              <img
+                src={clientClassicCar}
+                alt="Pai do cliente ao lado de um carro antigo, símbolo do legado da Auto Center Magaiver Tech"
+                className="h-[360px] w-full object-cover object-center sm:h-[460px] lg:h-[560px]"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />
+              <div className="absolute bottom-5 left-5 right-5">
+                <div className="font-body text-[11px] uppercase tracking-[0.26em] text-amber">Uma história de família</div>
+                <div className="mt-2 font-display text-2xl font-medium text-cream">O começo de tudo</div>
+              </div>
+            </div>
+          </motion.div>
+          <div className="col-span-12 lg:col-span-7">
+            <div className="flex items-center gap-3">
+              <span className="font-display text-xs font-medium text-amber">02</span>
+              <div className="h-px w-8 bg-amber" />
+              <span className="font-body text-[11px] font-medium uppercase tracking-[0.3em] text-mute">Nosso legado</span>
+            </div>
+            <h2 className="mt-6 max-w-3xl font-display text-4xl font-medium leading-[1.05] tracking-tight text-cream sm:text-5xl lg:text-6xl">
+              Uma base ensinada <span className="font-serif-it text-amber">desde criança.</span>
+            </h2>
+            <div className="mt-8 grid gap-6 font-body text-[15px] leading-relaxed text-cream/70 sm:grid-cols-2">
+              <p>
+                A Auto Center Magaiver Tech carrega uma história construída com dedicação, experiência e ensinamentos passados de geração em geração.
+                Grande parte dessa trajetória começou com o pai, que desde cedo transmitiu conhecimento, valores e amor pelo trabalho automotivo.
+              </p>
+              <p>
+                Hoje, a empresa segue esse legado com orgulho, unindo tradição, confiança e excelência no atendimento. Cada diagnóstico e cada reparo
+                carregam essa base: fazer bem feito, com respeito pela história e pelo cliente.
+              </p>
+            </div>
+            <div className="mt-10 grid gap-px border hairline bg-line/30 sm:grid-cols-3">
+              {["Tradição", "Confiança", "Excelência"].map((item) => (
+                <div key={item} className="bg-ink/70 p-5">
+                  <div className="font-display text-lg font-medium text-amber">{item}</div>
+                  <div className="mt-2 font-body text-[12px] uppercase tracking-[0.18em] text-mute">legado em cada serviço</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1276,6 +1340,7 @@ function Home() {
       <Navbar />
       <main>
         <Hero />
+        <Purpose />
         <Legacy />
         <Services />
         <Farol />
